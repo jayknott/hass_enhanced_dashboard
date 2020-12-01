@@ -167,7 +167,6 @@ async def update_dashboards() -> None:
         CONF_FILENAME: os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
-                os.pardir,
                 LOVELACE_DIR,
                 LOVELACE_FILENAME_SOURCE,
             )
