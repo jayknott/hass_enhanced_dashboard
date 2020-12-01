@@ -1,0 +1,17 @@
+template: base
+show_name: false
+size: 60%
+tap_action:
+  action: >
+    [[[ return entity.state == 'off' ? 'toggle' : 'none'; ]]]
+double_tap_action:
+  action: none
+hold_action:
+  action: none
+styles:
+  card:
+    - padding: 0
+    - width: 55px
+    - height: 55px
+  icon:
+    - color: var(--primary-text-color)

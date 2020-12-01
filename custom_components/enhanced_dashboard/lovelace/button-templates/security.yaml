@@ -1,0 +1,44 @@
+template: entity
+show_state: true
+color_type: card
+styles:
+  card:
+    - --mdc-ripple-color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--primary-color)'
+            : 'var(--text-primary-color)'
+        ]]]
+    - background-color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--ha-card-background, var(--card-background-color, white))'
+            : 'var(--error-state-color)'
+        ]]]
+    - color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--primary-text-color)'
+            : 'var(--text-primary-color)'
+        ]]]
+  icon:
+    - color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--paper-item-icon-color)'
+            : 'var(--text-primary-color)'
+        ]]]
+  label:
+    - color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--secondary-text-color)'
+            : 'var(--text-primary-color)'
+        ]]]
+  state:
+    - color: >
+        [[[
+          return ['locked', 'closed', 'off'].includes(entity.state)
+            ? 'var(--secondary-text-color)'
+            : 'var(--text-primary-color)'
+        ]]]

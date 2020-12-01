@@ -1,0 +1,34 @@
+{% set error = _custom_dashboard_config.missing_resources | length > 0 %}
+{% set areas = _custom_dashboard_areas | selectattr('visible') | sort(attribute='sort_order,name') | list %}
+
+{% if error %}
+
+- !include error.yaml
+
+{% else %}
+
+- !include
+    - home.yaml
+    - areas: >
+        {{ areas | to_json }}
+
+- !include security.yaml
+- !include lights.yaml
+- !include something_on.yaml
+- !include batteries.yaml
+
+- !include settings.yaml
+- !include settings_areas.yaml
+- !include settings_entities.yaml
+- !include settings_hidden.yaml
+- !include settings_unused.yaml
+
+{% if areas and (areas | length) >= 1 %}
+{% for area in areas %}
+- !include
+    - area.yaml
+    - area: >
+        {{ area | to_json }}
+{% endfor %}
+{% endif %}
+{% endif %}

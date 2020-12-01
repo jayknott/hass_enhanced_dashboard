@@ -1,0 +1,21 @@
+template: base
+show_icon: false
+show_name: false
+show_state: true
+tap_action:
+  action: more-info
+hold_action:
+  action: none
+double_tap_action:
+  action: none
+styles:
+  card:
+    - padding: 5px
+    - width: 87px
+    - height: 87px
+    - background-image: >-
+        [[[ return "linear-gradient(to bottom, transparent 60%, var(--text-light-primary-color)), " +
+        "url(\"" + entity.attributes.entity_picture + "\")" ]]]
+    - background-size: cover
+  state:
+    - color: var(--text-primary-color)

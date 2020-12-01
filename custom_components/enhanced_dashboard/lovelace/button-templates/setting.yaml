@@ -1,0 +1,6 @@
+template: base
+color: 'var(--primary-color)'
+hold_action:
+  action: none
+double_tap_action:
+  action: none

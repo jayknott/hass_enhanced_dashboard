@@ -1,0 +1,25 @@
+template: entity
+show_state: true
+show_label: true
+label: >
+  [[[
+    return entity.attributes.brightness == null
+      ? ''
+      : `${Math.floor(entity.attributes.brightness / 255 * 100)}%`
+  ]]]
+custom_fields:
+  color: >
+    [[[
+      return entity.attributes.rgb_color == null
+              ? ''
+              : `<ha-icon
+                  icon="hass:lightbulb"
+                  style="width: 20px; height: 20px; color: var(--button-card-light-color-no-temperature);"
+                />`
+    ]]]
+styles:
+  custom_fields:
+    color:
+      - position: absolute
+        top: 10px
+        right: 10px

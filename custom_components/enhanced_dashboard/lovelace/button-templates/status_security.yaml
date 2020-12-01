@@ -1,0 +1,21 @@
+template: status_sensor
+icon: mdi:shield
+extra_styles: |
+  @keyframes blinking {
+    0% { transform: scale(1); }
+    5% { transform: scale(1.2); }
+    10% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    20% { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+state:
+  - value: 'on'
+    color: var(--error-state-color)
+    icon: mdi:shield-alert
+    styles:
+      icon:
+        - animation: blinking 10s ease infinite
+  - value: 'off'
+    icon: mdi:shield-check
+
