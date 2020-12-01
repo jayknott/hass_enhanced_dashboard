@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set title = _custom_dashboard_trans.setting.other ~ " - " ~ _custom_dashboard_trans.device.other %}
 
 panel: false

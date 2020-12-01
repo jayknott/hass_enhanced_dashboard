@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set friendly_name = state_attr(entity, 'friendly_name') | default(_custom_dashboard_trans.device.one, true) %}
 {% if name is defined %}
   {% set display_name = name %}

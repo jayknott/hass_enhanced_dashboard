@@ -1,3 +1,5 @@
+# enhanced_templates
+
 type: markdown
 content: "## {{ title }}"
 style: |

@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set area = area | from_json %}
 
 type: custom:button-card

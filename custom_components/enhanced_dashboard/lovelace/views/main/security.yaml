@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
 {% set security = entities | selectattr('type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
 {% set security_sensors = entities | selectattr('type', 'in', ['security_motion', 'security_sensor']) | sort(attribute='sort_order,name') | list %}

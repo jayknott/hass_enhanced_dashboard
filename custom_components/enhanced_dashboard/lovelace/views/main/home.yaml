@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set areas = areas | from_json %}
 {% set climate_main = _custom_dashboard_entities |
                       selectattr('visible') |

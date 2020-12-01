@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
 {% set all_lights = entities | selectattr('type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
 {% set lights = entities | selectattr('type', 'equalto', 'light') | sort(attribute='name') | list %}

@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
 {% set batteries = entities | selectattr('type', 'in', ['battery']) | sort(attribute='name') | list %}
 

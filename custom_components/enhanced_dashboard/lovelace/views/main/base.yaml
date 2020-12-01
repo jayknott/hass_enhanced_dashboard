@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set error = _custom_dashboard_config.missing_resources | length > 0 %}
 {% set areas = _custom_dashboard_areas | selectattr('visible') | sort(attribute='sort_order,name') | list %}
 

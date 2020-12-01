@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set entities =
   _custom_dashboard_entities |
   selectattr('area_id') |

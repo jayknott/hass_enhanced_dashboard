@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set area = area | from_json %}
 {% set room_name = area.name %}
 {% set room_slug = room_name | lower | replace(" ", "_") %}

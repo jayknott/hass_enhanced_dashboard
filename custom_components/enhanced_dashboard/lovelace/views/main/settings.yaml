@@ -1,3 +1,5 @@
+# enhanced_templates
+
 {% set settings = [
     {
       "name": _custom_dashboard_trans.room.other,
