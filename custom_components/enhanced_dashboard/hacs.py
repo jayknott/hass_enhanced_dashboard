@@ -45,7 +45,9 @@ async def update_hacs() -> None:
                 log.warning(f"{hacs_plugin} already installed.")
                 continue
             else:
-                log.warning(f"{hacs_plugin} installing. {repo.data}")
+                log.warning(
+                    f"{hacs_plugin} installing. {repo.status.__dict__} {repo.data}"
+                )
             try:
                 await repo.async_install()
             except:
