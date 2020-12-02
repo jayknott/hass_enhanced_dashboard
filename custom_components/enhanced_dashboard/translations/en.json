@@ -9,23 +9,20 @@
         "step": {
             "user": {
                 "description": "If you need help with the configuration have a look here: https:\/\/github.com\/jayknott\/enhanced_dashboard\/",
-                "title": "Setup Enhanced Dashboard"
+                "title": "Setup Enhanced Dashboard",
+                "data": {
+                    "language": "Language"
+                }
             }
         }
     },
     "options": {
         "step": {
             "user": {
+                "description": "If you need help with the configuration have a look here: https:\/\/github.com\/jayknott\/enhanced_dashboard\/",
+                "title": "Options for Enhanced Dashboard",
                 "data": {
-                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
-                    "country": "Filter with country code.",
-                    "debug": "Enable debug.",
-                    "experimental": "Enable experimental features",
-                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
-                    "not_in_use": "Not in use with YAML",
-                    "release_limit": "Number of releases to show.",
-                    "sidepanel_icon": "Side panel icon",
-                    "sidepanel_title": "Side panel title"
+                    "language": "Language"
                 }
             }
         }

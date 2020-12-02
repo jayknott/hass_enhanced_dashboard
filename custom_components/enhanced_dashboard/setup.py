@@ -21,36 +21,29 @@ from homeassistant.helpers.typing import ConfigType
 # from .components.yaml_parser import setup_yaml_parser
 # from .events import setup_events
 
-from .files import setup_files
 from .model import Configuration
-from .share import get_base, get_configuration, get_hass, get_log
+from .share import get_base, get_configuration, get_log
 
 # from .services import setup_services
 
 
-from .const import DOMAIN, TITLE
+from .const import DOMAIN, HACS_INTEGRATIONS, TITLE
 
 
 async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
     """Main setup procedure for this integration."""
 
     get_base().hass = hass
-
+    conf = get_configuration()
     log = get_log()
-
-    # Check for Enhanced Templates
-    if "enhanced_templates" not in hass.config.components:
-        log.error(
-            f"Enhanced Templates is not installed. {TITLE} requires Enhanced Templates to operate."
-        )
-        return False
 
     # Check if legacy templates are enabled.
     if hass.config.legacy_templates:
         log.error(
             f"Legacy templates are enabled. {TITLE} requires legacy templates to be disabled."
         )
-        return False
+    else:
+        conf.new_templates = True
 
     # Check for HACS
     if "hacs" not in hass.config.components:
@@ -58,19 +51,7 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
             f"HACS is not installed, {TITLE} dependencies will have to be installed manually."
         )
     else:
-        get_configuration().hacs_installed = True
-
-    # Check for browser mod.
-    if "browser_mod" not in hass.config.components:
-        log.warning(
-            "Key 'browser_mod' not found in configuration.yaml. Browser mod is required for popups and other UI elements."
-        )
-    else:
-        get_configuration().browser_mod_installed = True
-
-    from .counters import setup_counters
-    from .lovelace import setup_lovelace
-    from .registry import setup_registry
+        conf.hacs_installed = True
 
     # hass.data[DOMAIN] = {
     #     CONF_BUILT_IN_ENTITIES: {},
@@ -79,29 +60,47 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
     #     CONF_ENTITIES: [],
     # }
 
-    async def handle_hass_started(_event: Event) -> None:
-        """Event handler for when HA has started."""
+    if conf.hacs_installed:
+        from .hacs import setup_hacs, pending_restart
 
-        # await update_registries()
-        # await update_template_areas_global()
-        # await update_template_entities_global()
-        create_task(setup_counters())
-        # create_task(setup_input_booleans())
-        # create_task(setup_input_numbers())
-        # create_task(setup_input_selects())
-        # create_task(setup_input_texts())
-        # create_task(setup_automations())
-        create_task(setup_lovelace())
-        # create_task(setup_events())
-        # create_task(setup_services())
+        await setup_hacs()
+        if pending_restart():
+            log.error(
+                f"A required HACS integration requires a restart. Please restart Home Assistant for {TITLE} to be available."
+            )
+            return False
 
-    # await setup_registries()
+    # Check for required integrations
+    missing_integration = False
+    for integration in HACS_INTEGRATIONS.keys():
+        if integration not in hass.config.components:
+            log.error(
+                f"The required HACS integration, '{integration}', is not installed. It may need to be installed manually."
+            )
+            missing_integration = True
+
+    if missing_integration:
+        return False
+
+    from .files import setup_files
+    from .registry import setup_registry
+    from .template import setup_template
 
     create_task = hass.async_create_task
     create_task(setup_files())
-    # create_task(setup_template())
-    # create_task(setup_yaml_parser())
+    create_task(setup_template())
     create_task(setup_registry())
+
+    async def handle_hass_started(_event: Event) -> None:
+        """Event handler for when HA has started."""
+
+        from .lovelace import setup_lovelace
+        from .counters import setup_counters
+
+        create_task(setup_counters())
+        create_task(setup_lovelace())
+        # create_task(setup_events())
+        # create_task(setup_services())
 
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, handle_hass_started)
 
@@ -111,20 +110,26 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up this integration using yaml."""
 
-    base = get_base()
-    base.configuration = (
-        base.configuration if base.configuration is not None else Configuration()
-    )
-    base.configuration.lovelace_mode = config.get(CONF_MODE, MODE_STORAGE)
+    conf = get_configuration()
+
+    if conf is None:
+        conf = Configuration()
+
+    conf.lovelace_mode = config.get(CONF_MODE, MODE_STORAGE)
 
     if DOMAIN not in config:
         return True
 
-    if base.configuration and base.configuration.config_type == "flow":
+    if conf and conf.config_type == "flow":
         return True
 
-    base.configuration.config = config[DOMAIN]
-    base.configuration.config_type = "yaml"
+    conf.config = config[DOMAIN]
+    conf.config_type = "yaml"
+
+    conf.set_language(config.get(DOMAIN, {}).get("language"))
+
+    if config.get(DOMAIN, {}).get("language") is not None:
+        conf.language = config[DOMAIN]["language"]
 
     return await setup_integration(hass, config)
 
@@ -132,10 +137,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up this integration using the UI."""
 
-    base = get_base()
+    # base = get_base()
+    conf = get_configuration()
 
-    if base.configuration and base.configuration.config_type == "yaml":
-        base.log.warning(
+    if conf and conf.config_type == "yaml":
+        get_log().warning(
             f"""
                 {TITLE} is setup both in config.yaml and integrations.
                 The YAML configuration has taken precedence.
@@ -148,10 +154,19 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     #     hass.async_create_task(hass.config_entries.async_remove(config_entry.entry_id))
     #     return False
 
-    base.configuration = (
-        base.configuration if base.configuration is not None else Configuration()
-    )
-    base.configuration.config_entry = config_entry
-    base.configuration.config_type = "flow"
+    if conf is None:
+        conf = Configuration()
 
-    return await setup_integration(hass, config_entry.data)
+    conf.config_entry = config_entry
+    conf.config_type = "flow"
+
+    conf.set_language(config_entry.data.get("language"))
+
+    async def update_listener(hass: HomeAssistant, entry: ConfigEntry):
+        """Listen for options updates."""
+
+        get_log().warn("Listening for option updates")
+
+    conf.config_entry_unsub_listener = config_entry.add_update_listener(update_listener)
+
+    return await setup_integration(hass, config_entry)

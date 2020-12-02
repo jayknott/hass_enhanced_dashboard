@@ -9,9 +9,11 @@
   "issue_tracker": "https://github.com/jayknott/hass_enhanced_dashboard/issues",
   "dependencies": [
     "binary_sensor",
+    "lovelace"
+  ],
+  "after_dependencies": [
     "browser_mod",
     "enhanced_templates",
-    "hacs",
-    "lovelace"
+    "hacs"
   ]
 }

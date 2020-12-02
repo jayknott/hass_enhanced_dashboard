@@ -18,28 +18,32 @@ LOVELACE_DASHBOARD_ICON = "mdi:view-dashboard"
 # Icon to display by default for rooms
 DEFAULT_AREA_ICON = "mdi:square-rounded-outline"
 
-# List of repositories that need to be imported into HACS [{"url": str, "type": "plugin"}]
+# List of repositories that need to be imported into HACS [{"full_name": str, "type": "plugin"}]
 HACS_CUSTOM_REPOSITORIES = [
+    {"full_name": "jayknott/hass_enhanced_templates", "type": "integration"},
     {
-        "url": "https://github.com/jayknott/hass_enhanced_templates_card",
+        "full_name": "jayknott/hass_enhanced_templates_card",
         "type": "plugin",
     },
     {
-        "url": "https://github.com/jayknott/hass_lovelace_simple_flexbox_card",
+        "full_name": "jayknott/hass_lovelace_simple_flexbox_card",
         "type": "plugin",
     },
-    {"url": "https://github.com/DBuit/light-popup-card", "type": "plugin"},
+    {"full_name": "DBuit/light-popup-card", "type": "plugin"},
 ]
 
-# HACS integration repositories to install. This needs to be the full name.
-#   Make sure any custom repositories are included in both HACS_CUSTOM_REPOSITORIES and this list
-HACS_INTEGRATIONS = [
-    "jayknott/hass_enhanced_templates",
-    "thomasloven/hass-browser_mod",
-]
+# HACS integration repositories to install.
+#   The key is the integration domain to check in the HA config and the value needs to be
+#   the full name of the HACS repository.
+#   Make sure any custom repositories are included in both HACS_CUSTOM_REPOSITORIES and this list.
+#   These also need to be added to the manifest as after dependencies.
+HACS_INTEGRATIONS = {
+    "enhanced_templates": "jayknott/hass_enhanced_templates",
+    "browser_mod": "thomasloven/hass-browser_mod",
+}
 
 # HACS plugin repositories to install. This needs to be the full name.
-#   Make sure any custom repositories are included in both HACS_CUSTOM_REPOSITORIES and this list
+#   Make sure any custom repositories are included in both HACS_CUSTOM_REPOSITORIES and this list.
 HACS_PLUGINS = [
     "custom-cards/button-card",
     "DBuit/light-popup-card",
@@ -48,6 +52,7 @@ HACS_PLUGINS = [
     "kalkih/mini-media-player",
     "thomasloven/lovelace-state-switch",
     "jayknott/hass_enhanced_templates_card",
+    "jayknott/hass_lovelace_simple_flexbox_card",
 ]
 
 # Custom cards that needs to be imported. These needs to be stored in ./lovelace/cards/[dirname].
@@ -61,10 +66,14 @@ LOVELACE_CUSTOM_CARDS = [
 ]
 
 # Default translation to use if there is no translation for the user's current HA selected language.
-DATA_DEFAULT_LANGUAGE = "en"
+DEFAULT_LANGUAGE = "en"
+
+# Supported translations
+SUPPORTED_LANGUAGES = ["en"]
 
 # Additional variables to include in the Jinja object
-JINJA_VARIABLES = {}
+# The key is the variable name and the value will be the value of the variabile.
+JINJA_GLOBALS = {}
 
 # Supported entity types (These can be anything the dashboard will support and track)
 # Does not need to be specific to HA integrations.
@@ -196,42 +205,6 @@ PLATFORM_INPUT_NUMBER = "input_number"
 PLATFORM_INPUT_SELECT = "input_select"
 PLATFORM_INPUT_TEXT = "input_text"
 
-BUILT_IN_AREA_ICON = "area_icon"
-BUILT_IN_AREA_NAME = "area_name"
-BUILT_IN_AREA_SELECT = "area_select"
-BUILT_IN_AREA_SELECTED = "selected_area"
-BUILT_IN_AREA_SORT_ORDER = "area_sort_order"
-BUILT_IN_AREA_VISIBLE = "area_visible"
-BUILT_IN_AUTOMATION_AREA_CHANGED = "automation_area_changed"
-BUILT_IN_AUTOMATION_ENTITY_CHANGED = "automation_entity_changed"
-BUILT_IN_AUTOMATION_POPULATE_AREA_SELECT = "automation_populate_area_select"
-BUILT_IN_AUTOMATION_POPULATE_ENTITY_SELECT = "automation_populate_entity_select"
-BUILT_IN_ENTITY_AREA_SELECT = "entity_area_select"
-BUILT_IN_ENTITY_ID_SELECT = "entity_id_select"
-BUILT_IN_ENTITY_SELECTED = "selected_entity"
-BUILT_IN_ENTITY_SORT_ORDER = "entity_sort_order"
-BUILT_IN_ENTITY_TYPE_SELECT = "entity_type_select"
-BUILT_IN_ENTITY_VISIBLE = "entity_visible"
-
-BUILT_IN_ENTITY_IDS = {
-    BUILT_IN_AREA_ICON: f"{PLATFORM_INPUT_TEXT}.{DOMAIN}_{BUILT_IN_AREA_ICON}",
-    BUILT_IN_AREA_NAME: f"{PLATFORM_INPUT_TEXT}.{DOMAIN}_{BUILT_IN_AREA_NAME}",
-    BUILT_IN_AREA_SELECT: f"{PLATFORM_INPUT_SELECT}.{DOMAIN}_{BUILT_IN_AREA_SELECT}",
-    BUILT_IN_AREA_SELECTED: f"{PLATFORM_BINARY_SENSOR}.{DOMAIN}_{BUILT_IN_AREA_SELECTED}",
-    BUILT_IN_AREA_SORT_ORDER: f"{PLATFORM_INPUT_NUMBER}.{DOMAIN}_{BUILT_IN_AREA_SORT_ORDER}",
-    BUILT_IN_AREA_VISIBLE: f"{PLATFORM_INPUT_BOOLEAN}.{DOMAIN}_{BUILT_IN_AREA_VISIBLE}",
-    BUILT_IN_AUTOMATION_AREA_CHANGED: f"{PLATFORM_AUTOMATION}.{DOMAIN}_{BUILT_IN_AUTOMATION_AREA_CHANGED}",
-    BUILT_IN_AUTOMATION_ENTITY_CHANGED: f"{PLATFORM_AUTOMATION}.{DOMAIN}_{BUILT_IN_AUTOMATION_ENTITY_CHANGED}",
-    BUILT_IN_AUTOMATION_POPULATE_AREA_SELECT: f"{PLATFORM_AUTOMATION}.{DOMAIN}_{BUILT_IN_AUTOMATION_POPULATE_AREA_SELECT}",
-    BUILT_IN_AUTOMATION_POPULATE_ENTITY_SELECT: f"{PLATFORM_AUTOMATION}.{DOMAIN}_{BUILT_IN_AUTOMATION_POPULATE_ENTITY_SELECT}",
-    BUILT_IN_ENTITY_AREA_SELECT: f"{PLATFORM_INPUT_SELECT}.{DOMAIN}_{BUILT_IN_ENTITY_AREA_SELECT}",
-    BUILT_IN_ENTITY_ID_SELECT: f"{PLATFORM_INPUT_SELECT}.{DOMAIN}_{BUILT_IN_ENTITY_ID_SELECT}",
-    BUILT_IN_ENTITY_SELECTED: f"{PLATFORM_BINARY_SENSOR}.{DOMAIN}_{BUILT_IN_ENTITY_SELECTED}",
-    BUILT_IN_ENTITY_SORT_ORDER: f"{PLATFORM_INPUT_NUMBER}.{DOMAIN}_{BUILT_IN_ENTITY_SORT_ORDER}",
-    BUILT_IN_ENTITY_TYPE_SELECT: f"{PLATFORM_INPUT_SELECT}.{DOMAIN}_{BUILT_IN_ENTITY_TYPE_SELECT}",
-    BUILT_IN_ENTITY_VISIBLE: f"{PLATFORM_INPUT_BOOLEAN}.{DOMAIN}_{BUILT_IN_ENTITY_VISIBLE}",
-}
-
 CONF_ACTION = "action"
 CONF_ADDERS = "adders"
 CONF_AREA = "area"
@@ -265,12 +238,6 @@ CONF_VISIBLE = "visible"
 DEFAULT_SORT_ORDER = 500000
 DEFAULT_SORT_ORDER_MAX = 999999
 DEFAULT_SORT_ORDER_MIN = 1
-
-EVENT_SETTINGS_CHANGED = f"{DOMAIN}_settings_changed"
-EVENT_AREA_SETTINGS_CHANGED = f"{DOMAIN}_area_settings_changed"
-EVENT_ENTITY_SETTINGS_CHANGED = f"{DOMAIN}_entity_settings_changed"
-EVENT_TRIGGER_AREA_AUTOMATIONS = f"{DOMAIN}_trigger_area_automations"
-EVENT_TRIGGER_ENTITY_AUTOMATIONS = f"{DOMAIN}_trigger_entity_automations"
 
 LOVELACE = "lovelace"
 LOVELACE_CARD_DIR = "cards"
