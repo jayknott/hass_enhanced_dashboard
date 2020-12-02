@@ -43,10 +43,10 @@ async def update_hacs() -> None:
             repo = hacs.get_by_name(hacs_plugin)
             if repo.data.installed:
                 log.warning(f"{hacs_plugin} already installed.")
+                continue
             else:
-                log.warning(f"{hacs_plugin} installing.")
+                log.warning(f"{hacs_plugin} installing. {repo.data}")
             try:
-                pass
                 await repo.async_install()
             except:
                 log.error("Unable to install HACS repository: %s", hacs_plugin)
