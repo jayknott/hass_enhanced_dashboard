@@ -33,9 +33,10 @@ async def update_hacs() -> None:
     log = get_log()
     hacs = get_hacs()
 
-    # Add custom repositories to HACS
+    # Add custom repositories to HACS is not already present.
     for repo in HACS_CUSTOM_REPOSITORIES:
-        await register_repository(repo["full_name"], repo["type"])
+        if hacs.get_by_name(repo["full_name"]) is None:
+            await register_repository(repo["full_name"], repo["type"])
 
     # Install needed HACS integrations and plugins
     for hacs_plugin in list(HACS_INTEGRATIONS.values()) + HACS_PLUGINS:
