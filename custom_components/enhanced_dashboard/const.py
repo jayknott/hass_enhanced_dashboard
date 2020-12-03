@@ -71,8 +71,9 @@ DEFAULT_LANGUAGE = "en"
 # Supported translations
 SUPPORTED_LANGUAGES = ["en"]
 
-# Additional variables to include in the Jinja object
+# Additional variables to include in the Jinja environment.
 # The key is the variable name and the value will be the value of the variabile.
+# _{DOMAIN}_ will automatically be added to the variable names.
 JINJA_GLOBALS = {}
 
 # Supported entity types (These can be anything the dashboard will support and track)

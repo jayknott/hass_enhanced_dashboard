@@ -1,24 +1,28 @@
 """Override registry settings in enhanced_templates."""
-from typing import Any
+import os
+from typing import Any, Dict, Union
 from homeassistant.helpers.template import (
     _ENVIRONMENT,
     TemplateEnvironment,
 )
 
-from .const import JINJA_GLOBALS
-from .share import get_hass
+from custom_components.enhanced_templates.yaml_parser import parse_yaml
+
+from .const import DEFAULT_LANGUAGE, DOMAIN, JINJA_GLOBALS, TRANSLATIONS_PATH
+from .share import get_configuration, get_hass, get_log
+
+TranslationDict = Dict[str, Union[str, Dict[str, str]]]
 
 
 async def setup_template() -> None:
     """Setup Jinja template for this integration."""
 
-    jinja: TemplateEnvironment = get_hass().data[_ENVIRONMENT]
-
     # Add additional Jinja globals
     for jinja_global in JINJA_GLOBALS.items():
-        jinja.globals[jinja_global[0]] = jinja_global[1]
+        add_template_global(*jinja_global)
 
-    # TODO: Add translations
+    # Add translations
+    add_template_global("trans", load_translations())
 
 
 async def add_template_global(name: str, value: Any) -> None:
@@ -26,4 +30,41 @@ async def add_template_global(name: str, value: Any) -> None:
 
     jinja: TemplateEnvironment = get_hass().data[_ENVIRONMENT]
 
-    jinja.globals[name] = value
+    jinja.globals[f"_{DOMAIN}_{name}"] = value
+
+
+def load_translations() -> TranslationDict:
+    """Load translation YAML files."""
+
+    # Always load the default language
+    translations: TranslationDict = parse_yaml(
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                os.pardir,
+                TRANSLATIONS_PATH + DEFAULT_LANGUAGE + ".yaml",
+            )
+        )
+    )
+
+    language = get_configuration().language
+
+    # Update with the selected language which allows for incomplete translations.
+    if language != DEFAULT_LANGUAGE:
+        try:
+            translations.update(
+                parse_yaml(
+                    os.path.abspath(
+                        os.path.join(
+                            os.path.dirname(__file__),
+                            os.pardir,
+                            TRANSLATIONS_PATH + language + ".yaml",
+                        )
+                    ),
+                    skip_translations=True,
+                )
+            )
+        except:
+            get_log().warning(f"Translation doesn't exist for language '{language}.'")
+
+    return translations

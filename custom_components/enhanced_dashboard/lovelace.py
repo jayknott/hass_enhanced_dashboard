@@ -2,12 +2,6 @@
 import os
 from typing import Type
 
-try:
-    from custom_components.hacs.share import get_hacs
-except:
-    get_hacs = None
-
-
 from homeassistant.components.frontend import (
     async_register_built_in_panel,
     async_remove_panel,
@@ -97,6 +91,8 @@ async def update_resources() -> None:
 
     if not conf.hacs_installed:
         return
+
+    from custom_components.hacs.share import get_hacs
 
     hacs = get_hacs()
 

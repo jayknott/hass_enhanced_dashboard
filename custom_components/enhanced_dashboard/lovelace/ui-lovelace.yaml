@@ -2,7 +2,7 @@
 # Custom Dashboard Main Lovelace Config
 
 ## Button Card Templates
-button_card_templates: !include_dir_named {{ _custom_dashboard_config.lovelace }}/button-templates/
+button_card_templates: !include_dir_named {{ _enhanced_dashboard_config.lovelace_dir }}/button-templates/
 
 ## Base Configuration
 title: "{{ _custom_dashboard_trans.title }}"

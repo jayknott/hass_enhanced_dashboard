@@ -5,29 +5,14 @@ from homeassistant.const import CONF_MODE, EVENT_HOMEASSISTANT_STARTED
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.helpers.typing import ConfigType
 
-# from .components.automation import setup_automations
-
-# from .components.input_boolean import setup_input_booleans
-# from .components.input_number import setup_input_numbers
-# from .components.input_select import setup_input_selects
-# from .components.input_text import setup_input_texts
-
-# from .components.registry import setup_registries, update_registries
-# from .components.template import (
-#     setup_template,
-#     update_template_areas_global,
-#     update_template_entities_global,
-# )
-# from .components.yaml_parser import setup_yaml_parser
-# from .events import setup_events
-
 from .model import Configuration
 from .share import get_base, get_configuration, get_log
+from .template import add_template_global
 
 # from .services import setup_services
 
 
-from .const import DOMAIN, HACS_INTEGRATIONS, TITLE
+from .const import DOMAIN, HACS_INTEGRATIONS, LOVELACE_DIR, TITLE
 
 
 async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -90,6 +75,15 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
     create_task(setup_files())
     create_task(setup_template())
     create_task(setup_registry())
+
+    add_template_global(
+        "config",
+        {
+            "language": conf.language,
+            "lovelace_dir": LOVELACE_DIR,
+            "missing_resources": conf.missing_resources,
+        },
+    )
 
     async def handle_hass_started(_event: Event) -> None:
         """Event handler for when HA has started."""

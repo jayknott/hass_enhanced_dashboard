@@ -1,14 +1,8 @@
 """Extend Lovelace to support this integration."""
-# try:
 from custom_components.hacs.helpers.functions.register_repository import (
     register_repository,
 )
 from custom_components.hacs.share import get_hacs
-
-# except:
-#     hacs_repository = None
-#     hacs_repository_data = None
-#     get_hacs = None
 
 from .const import (
     HACS_CUSTOM_REPOSITORIES,
