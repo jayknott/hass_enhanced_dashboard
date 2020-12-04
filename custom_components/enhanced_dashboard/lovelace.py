@@ -156,7 +156,4 @@ async def update_dashboards() -> None:
     async_register_built_in_panel(hass, LOVELACE_DOMAIN, **kwargs)
 
     # Refresh lovelace using browser_mod
-    if get_configuration().browser_mod_installed:
-        hass.async_create_task(
-            hass.services.async_call("browser_mod", "lovelace_reload")
-        )
+    hass.async_create_task(hass.services.async_call("browser_mod", "lovelace_reload"))
