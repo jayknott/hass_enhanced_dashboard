@@ -25,7 +25,7 @@ async def setup_template() -> None:
     add_template_global("trans", load_translations())
 
 
-async def add_template_global(name: str, value: Any) -> None:
+def add_template_global(name: str, value: Any) -> None:
     """Add a global to the template."""
 
     jinja: TemplateEnvironment = get_hass().data[_ENVIRONMENT]
@@ -41,7 +41,6 @@ def load_translations() -> TranslationDict:
         os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
-                os.pardir,
                 TRANSLATIONS_PATH + DEFAULT_LANGUAGE + ".yaml",
             )
         )
@@ -57,7 +56,6 @@ def load_translations() -> TranslationDict:
                     os.path.abspath(
                         os.path.join(
                             os.path.dirname(__file__),
-                            os.pardir,
                             TRANSLATIONS_PATH + language + ".yaml",
                         )
                     ),
