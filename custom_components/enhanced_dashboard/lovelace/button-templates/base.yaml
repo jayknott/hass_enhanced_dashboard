@@ -1,9 +1,11 @@
 tap_action:
-  action: toggle
+  action: >
+    [[[ return !!entity && entity.state == 'unavailable' ? 'none' : 'toggle' ]]]
 double_tap_action:
   action: none
 hold_action:
-  action: more-info
+  action: >
+    [[[ return !!entity && entity.state == 'unavailable' ? 'none' : 'more-info' ]]]
 color: var(--paper-item-icon-color)
 styles:
   card:

@@ -1,3 +1,5 @@
+# enhanced_templates
+
 template: entity
 show_label: true
 icon: >
@@ -35,7 +37,7 @@ label: >
     if (!entity.attributes['Battery State']) return null;
 
     return ['charging', 'full'].includes(entity.attributes['Battery State'].toLowerCase())
-      ? '{{ _custom_dashboard_trans.battery.charging }}'
+      ? '{{ _enhanced_dashboard_trans.battery.charging }}'
       : null;
   ]]]
 styles:

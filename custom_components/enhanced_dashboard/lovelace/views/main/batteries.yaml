@@ -1,10 +1,10 @@
 # enhanced_templates
 
-{% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
-{% set batteries = entities | selectattr('type', 'in', ['battery']) | sort(attribute='name') | list %}
+{% set all_entities = entities | selectattr('area_id') | selectattr('visible') | list %}
+{% set batteries = all_entities | selectattr('entity_type', 'in', ['battery']) | sort(attribute='name') | list %}
 
 panel: true
-title: {{ _custom_dashboard_trans.battery.other }}
+title: {{ _enhanced_dashboard_trans.battery.other }}
 icon: mdi:battery
 path: batteries
 visible: false
@@ -27,47 +27,44 @@ cards:
       cards:
         - !include
           - ../components/page_header.yaml
-          - title: {{ _custom_dashboard_trans.battery.other }}
+          - title: {{ _enhanced_dashboard_trans.battery.other }}
         {% if batteries and batteries | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
             {% for battery in batteries %}
-            - card:
-                type: custom:state-switch
-                entity: template
-                template: "{% raw %}{{{% endraw %} 'on' if states('{{ battery.entity_id }}') in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'unavailable', 'on'] else 'off' {% raw %}}}{% endraw %}"
-                states:
-                  'on':
-                    !include
-                      - ../components/entity_button.yaml
-                      - template: battery
-                        entity: {{ battery.entity_id }}
-            {% endfor %}
-            - card:
-                type: conditional
-                conditions:
-                  - entity: binary_sensor.custom_dashboard_battery
-                    state: 'off'
-                card:
-                  !include
-                    - ../components/caption_text.yaml
-                    - content: {{ _custom_dashboard_trans.battery.all_off }}
-        - !include
-          - ../components/section_header.yaml
-          - title: {{ _custom_dashboard_trans.battery.all }}
-        {% if batteries and batteries | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
-          cards:
-              {% for battery in batteries %}
-              - card:
+            - type: custom:state-switch
+              entity: template
+              template: "{% raw %}{{{% endraw %} 'on' if states('{{ battery.entity_id }}') in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'unavailable', 'on'] else 'off' {% raw %}}}{% endraw %}"
+              states:
+                'on':
                   !include
                     - ../components/entity_button.yaml
                     - template: battery
                       entity: {{ battery.entity_id }}
+            {% endfor %}
+            - type: conditional
+              conditions:
+                - entity: binary_sensor.custom_dashboard_battery
+                  state: 'off'
+              card:
+                !include
+                  - ../components/caption_text.yaml
+                  - content: {{ _enhanced_dashboard_trans.battery.all_off }}
+        - !include
+          - ../components/section_header.yaml
+          - title: {{ _enhanced_dashboard_trans.battery.all }}
+        {% if batteries and batteries | length > 0 %}
+        - type: custom:simple-flexbox-card
+          cards:
+              {% for battery in batteries %}
+              - !include
+                - ../components/entity_button.yaml
+                - template: battery
+                  entity: {{ battery.entity_id }}
               {% endfor %}
         {% endif %}
         {% else %}
         - !include
             - ../components/caption_text.yaml
-            - content: {{ _custom_dashboard_trans.battery.none }}
+            - content: {{ _enhanced_dashboard_trans.battery.none }}
         {% endif %}

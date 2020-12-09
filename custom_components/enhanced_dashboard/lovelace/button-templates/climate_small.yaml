@@ -1,3 +1,5 @@
+# enhanced_templates
+
 template: number_sensor
 show_state: true
 state_display: >
@@ -32,16 +34,16 @@ custom_fields:
       let state = '';
       switch(entity.state) {
         case 'cool':
-          state = '{{_custom_dashboard_trans.climate.cool}}';
+          state = '{{_enhanced_dashboard_trans.climate.cool}}';
           break;
         case 'heat':
-          state = '{{_custom_dashboard_trans.climate.heat}}';
+          state = '{{_enhanced_dashboard_trans.climate.heat}}';
           break;
         case 'heat_cool':
-          state = '{{_custom_dashboard_trans.climate.heat_cool}}';
+          state = '{{_enhanced_dashboard_trans.climate.heat_cool}}';
           break;
         case 'off':
-          state = '{{_custom_dashboard_trans.climate.off}}';
+          state = '{{_enhanced_dashboard_trans.climate.off}}';
           break;
         default:
           state = 'Unknown'

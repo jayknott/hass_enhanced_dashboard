@@ -1,17 +1,15 @@
 # enhanced_templates
 
-{% set areas = areas | from_json %}
-{% set climate_main = _custom_dashboard_entities |
-                      selectattr('visible') |
-                      selectattr('type', 'equalto', 'climate_main') |
+{% set all_areas = areas | sort(attribute='sort_order,name') | list %}
+{% set climate_main = entities |
+                      selectattr('entity_type', 'equalto', 'climate_main') |
                       sort(attribute='sort_order,name') |
                       list |
                       first |
                       default(none, true)
 %}
-{% set weather = _custom_dashboard_entities |
-                  selectattr('visible') |
-                  selectattr('type', 'equalto', 'weather') |
+{% set weather = entities |
+                  selectattr('entity_type', 'equalto', 'weather') |
                   sort(attribute='sort_order,name') |
                   list |
                   first |
@@ -19,7 +17,7 @@
 %}
 
 panel: true
-title: {{ _custom_dashboard_trans.home.one }}
+title: {{ _enhanced_dashboard_trans.home.one }}
 icon: mdi:home
 path: home
 cards:
@@ -41,35 +39,31 @@ cards:
       cards:
         {% if states is defined %}
         {% if true %}
-        - type: custom:custom-dashboard-flexbox-card
-          margin_bottom: '0'
+        - type: custom:simple-flexbox-card
+          margin_bottom: 0px
           cards:
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - entity: binary_sensor.custom_dashboard_security
-                    template: status_security
-                    navigation_path: security
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - entity: binary_sensor.custom_dashboard_light
-                    template: status_sensor
-                    icon: hass:lightbulb
-                    navigation_path: lights
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - entity: binary_sensor.custom_dashboard_something_on
-                    template: status_sensor
-                    icon: mdi:play-circle
-                    navigation_path: something_on
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - entity: binary_sensor.custom_dashboard_battery
-                    template: status_battery
-                    navigation_path: batteries
+            - !include
+              - ../components/entity_button.yaml
+              - entity: binary_sensor.enhanced_dashboard_security
+                template: status_security
+                navigation_path: security
+            - !include
+              - ../components/entity_button.yaml
+              - entity: binary_sensor.enhanced_dashboard_light
+                template: status_sensor
+                icon: hass:lightbulb
+                navigation_path: lights
+            - !include
+              - ../components/entity_button.yaml
+              - entity: binary_sensor.enhanced_dashboard_something_on
+                template: status_sensor
+                icon: mdi:play-circle
+                navigation_path: something_on
+            - !include
+              - ../components/entity_button.yaml
+              - entity: binary_sensor.enhanced_dashboard_battery
+                template: status_battery
+                navigation_path: batteries
             {% if climate_main is not none %}
             # - card:
             #     !include
@@ -78,15 +72,14 @@ cards:
             #         template: status_climate
             {% endif %}
         {% if climate_main is not none or weather is not none %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           margin_bottom: '0'
           cards:
             {% if climate_main is not none %}
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - template: climate_small
-                    entity: {{ climate_main.entity_id }}
+            - !include
+              - ../components/entity_button.yaml
+              - template: climate_small
+                entity: {{ climate_main.entity_id }}
             # - card:
             #     !include
             #       - ../components/entity_button.yaml
@@ -119,39 +112,36 @@ cards:
             {% endif %}
             {% endif %}
             {% if weather is not none %}
-            - card:
-                !include
-                  - ../components/entity_button.yaml
-                  - template: weather_small
-                    entity: {{ weather.entity_id }}
+            - !include
+              - ../components/entity_button.yaml
+              - template: weather_small
+                entity: {{ weather.entity_id }}
             {% endif %}
         {% endif %}
         {% endif %}
         {% if states.person and (states.person | length) > 0 %}
         - !include
           - ../components/section_header.yaml
-          - title: "{{ _custom_dashboard_trans.person.other }}"
-        - type: custom:custom-dashboard-flexbox-card
+          - title: "{{ _enhanced_dashboard_trans.person.other }}"
+        - type: custom:simple-flexbox-card
           cards:
             {% for person in states.person %}
-            - card:
-                type: custom:button-card
-                template: person
-                entity: {{ person.entity_id }}
+            - type: custom:button-card
+              template: person
+              entity: {{ person.entity_id }}
             {% endfor %}
         {% endif %}
-        {% if areas and (areas | length) >= 1 %}
+        {% if all_areas and (all_areas | length) >= 1 %}
         - !include
           - ../components/section_header.yaml
-          - title: {{ _custom_dashboard_trans.room.other }}
-        - type: custom:custom-dashboard-flexbox-card
+          - title: {{ _enhanced_dashboard_trans.room.other }}
+        - type: custom:simple-flexbox-card
           cards:
-          {% for area in areas %}
-            - card:
-                !include
-                  - ../components/area_button.yaml
-                  - area: >
-                      {{ area | to_json }}
+          {% for area in all_areas %}
+            - !include
+              - ../components/area_button.yaml
+              - area: >
+                  {{ area.as_dict() | to_json }}
           {% endfor %}
         {% endif %}
         {% else %}

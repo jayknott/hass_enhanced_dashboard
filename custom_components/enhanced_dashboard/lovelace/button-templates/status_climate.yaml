@@ -1,8 +1,10 @@
+# enhanced_templates
+
 template: status_sensor
 show_state: true
 show_label: true
 state_display: >
-  [[[ return entity.state == 'heat_cool' ? '{{_custom_dashboard_trans.climate.heat_cool}}' : null ]]]
+  [[[ return entity.state == 'heat_cool' ? '{{_enhanced_dashboard_trans.climate.heat_cool}}' : null ]]]
 label: >
   [[[ return entity.attributes.temperature != null ? `${entity.attributes.temperature}°` : null ]]]
 icon: >

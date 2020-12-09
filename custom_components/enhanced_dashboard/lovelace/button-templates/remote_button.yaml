@@ -3,7 +3,10 @@ show_name: false
 size: 60%
 tap_action:
   action: >
-    [[[ return entity.state == 'off' ? 'toggle' : 'none'; ]]]
+    [[[ return [null, undefined, 'unavailable'].includes(entity.state) ? 'none' : 'toggle' ]]]
+hold_action:
+  action: >
+    [[[ return [null, undefined, 'unavailable'].includes(entity.state) ? 'none' : 'more-info' ]]]
 double_tap_action:
   action: none
 hold_action:

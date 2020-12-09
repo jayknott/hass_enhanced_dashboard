@@ -1,6 +1,6 @@
 # enhanced_templates
 
-{% set friendly_name = state_attr(entity, 'friendly_name') | default(_custom_dashboard_trans.device.one, true) %}
+{% set friendly_name = state_attr(entity, 'friendly_name') | default(_enhanced_dashboard_trans.device.one, true) %}
 {% if name is defined %}
   {% set display_name = name %}
 {% else %}
@@ -39,4 +39,7 @@ source: icon
 style: |
     ha-card {
       overflow: hidden !important;
+      width: 380px;
+      margin-right: 10px;
+      margin-bottom: 10px;
     }

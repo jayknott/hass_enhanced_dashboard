@@ -5,7 +5,7 @@ styles:
   card:
     - padding: 5px
     - width: 87px
-    - border-radius: 10px
+    - border-radius: null
   grid:
     - grid-template-areas: '"i s"'
     - grid-template-columns: 27px 1fr

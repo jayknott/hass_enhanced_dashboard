@@ -9,10 +9,10 @@ name: {{ area.name }}
 icon: {{ area.icon }}
 color: 'var(--primary-color)'
 triggers_update:
-  - binary_sensor.custom_dashboard_area_{{area.id}}_light
-  - binary_sensor.custom_dashboard_area_{{area.id}}_something_on
-  - binary_sensor.custom_dashboard_area_{{area.id}}_motion
-  - binary_sensor.custom_dashboard_area_{{area.id}}_security
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_light
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_something_on
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_motion
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_security
 tap_action:
   action: navigate
   navigation_path: "room_{{ area.name | lower | replace(' ', '_') }}"
@@ -23,7 +23,7 @@ double_tap_action:
 custom_fields:
   lights: >
     [[[
-      let light_state = states['binary_sensor.custom_dashboard_area_{{area.id}}_light'];
+      let light_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_light'];
       return `
         <ha-icon
           icon="hass:lightbulb"
@@ -40,7 +40,7 @@ custom_fields:
     ]]]
   media: >
     [[[
-      let media_state = states['binary_sensor.custom_dashboard_area_{{area.id}}_something_on'];
+      let media_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_something_on'];
       return `
         <ha-icon
           icon="mdi:play-circle"
@@ -57,7 +57,7 @@ custom_fields:
     ]]]
   motion: >
     [[[
-      let motion_state = states['binary_sensor.custom_dashboard_area_{{area.id}}_motion'];
+      let motion_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_motion'];
       return `
         <ha-icon
           icon="mdi:run"
@@ -74,7 +74,7 @@ custom_fields:
     ]]]
   unsecured: >
     [[[
-      let security_state = states['binary_sensor.custom_dashboard_area_{{area.id}}_security'];
+      let security_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_security'];
       return `
         <ha-icon
           icon=${
@@ -104,7 +104,7 @@ styles:
     - padding-right: 10px
     - white-space: nowrap
   grid:
-    - grid-template-areas: '"i i i i i i" "space1 lights media motion unsecured space2" "n n n n n n"'
+    - grid-template-areas: '"i i i i i i" "space1 unsecured motion lights media space2" "n n n n n n"'
     - grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
     - grid-template-rows: 1fr min-content min-content
   custom_fields:

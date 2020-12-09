@@ -1,7 +1,7 @@
 # enhanced_templates
 
-{% set error = _custom_dashboard_config.missing_resources | length > 0 %}
-{% set areas = _custom_dashboard_areas | selectattr('visible') | sort(attribute='sort_order,name') | list %}
+{% set error = _enhanced_dashboard_config.missing_resources | length > 0 %}
+{% set visible_areas = areas | sort(attribute='sort_order,name') | list %}
 
 {% if error %}
 
@@ -9,11 +9,7 @@
 
 {% else %}
 
-- !include
-    - home.yaml
-    - areas: >
-        {{ areas | to_json }}
-
+- !include home.yaml
 - !include security.yaml
 - !include lights.yaml
 - !include something_on.yaml
@@ -25,12 +21,12 @@
 - !include settings_hidden.yaml
 - !include settings_unused.yaml
 
-{% if areas and (areas | length) >= 1 %}
-{% for area in areas %}
+{% if visible_areas and (visible_areas | length) >= 1 %}
+{% for area in visible_areas %}
 - !include
     - area.yaml
     - area: >
-        {{ area | to_json }}
+        {{ area.as_dict() | to_json }}
 {% endfor %}
 {% endif %}
 {% endif %}

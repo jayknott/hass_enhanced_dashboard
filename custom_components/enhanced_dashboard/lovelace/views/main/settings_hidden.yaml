@@ -1,16 +1,16 @@
 # enhanced_templates
 
-{% set entities =
-  _custom_dashboard_entities |
+{% set all_entities =
+  entities(include_hidden=true) |
   selectattr('area_id') |
   rejectattr('visible') |
-  sort(attribute='type,name') |
+  sort(attribute='entity_type,name') |
   list
 %}
-{% set types = entities | map(attribute='type') | unique | sort | list  %}
+{% set types = all_entities | map(attribute='entity_type') | unique | sort | list  %}
 
 panel: true
-title: {{ _custom_dashboard_trans.setting.hidden }}
+title: {{ _enhanced_dashboard_trans.setting.hidden }}
 icon: mdi:eye-off
 path: settings_hidden
 visible: false
@@ -33,24 +33,23 @@ cards:
       cards:
         - !include
           - ../components/page_header.yaml
-          - title: {{ _custom_dashboard_trans.setting.hidden }}
+          - title: {{ _enhanced_dashboard_trans.setting.hidden }}
         {% if types and types | length > 0 %}
         {% for type in types %}
         - !include
           - ../components/section_header.yaml
-          - title: {{ (_custom_dashboard_trans[type] | default({}, true))['other'] | default(type | replace('_', ' ') | title, true) }}
-        - type: custom:custom-dashboard-flexbox-card
+          - title: {{ (_enhanced_dashboard_trans[type] | default({}, true))['other'] | default(type | replace('_', ' ') | title, true) }}
+        - type: custom:simple-flexbox-card
           cards:
-              {% for device in entities | selectattr('type', 'equalto', type) | list %}
-              - card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: device
-                      entity: {{ device.entity_id }}
-              {% endfor %}
+            {% for device in all_entities | selectattr('entity_type', 'equalto', type) | list %}
+            - !include
+              - ../components/entity_button.yaml
+              - template: device
+                entity: {{ device.entity_id }}
+            {% endfor %}
         {% endfor %}
         {% else %}
         - !include
           - ../components/caption_text.yaml
-          - content: {{ _custom_dashboard_trans.device.none }}
+          - content: {{ _enhanced_dashboard_trans.device.none }}
         {% endif %}

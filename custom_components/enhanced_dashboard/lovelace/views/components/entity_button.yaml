@@ -1,6 +1,6 @@
 # enhanced_templates
 
-{% set friendly_name = state_attr(entity, 'friendly_name') | default(_custom_dashboard_trans.device.one, true) %}
+{% set friendly_name = state_attr(entity, 'friendly_name') | default(_enhanced_dashboard_trans.device.one, true) %}
 {% if name is defined %}
   {% set display_name = name %}
 {% else %}
@@ -135,42 +135,42 @@ hold_action:
             {
               "color": "#ffffff",
               "service_color": "#ffffff",
-              "name": _custom_dashboard_trans.color.white
+              "name": _enhanced_dashboard_trans.color.white
             },
             {
               "color": "#fcfcff",
               "service_color": "#fcfcff",
-              "name": _custom_dashboard_trans.color.daylight
+              "name": _enhanced_dashboard_trans.color.daylight
             },
             {
               "color": "#d4ebff",
               "service_color": "#d4ebff",
-              "name": _custom_dashboard_trans.color.cool
+              "name": _enhanced_dashboard_trans.color.cool
             },
             {
               "color": "#ffc58f",
               "service_color": "#ffc58f",
-              "name": _custom_dashboard_trans.color.warm
+              "name": _enhanced_dashboard_trans.color.warm
             },
             {
               "color": "#00bfff",
               "service_color": "#00bfff",
-              "name": _custom_dashboard_trans.color.dodger_blue
+              "name": _enhanced_dashboard_trans.color.dodger_blue
             },
             {
               "color": "#0000ff",
               "service_color": "#0000ff",
-              "name": _custom_dashboard_trans.color.blue
+              "name": _enhanced_dashboard_trans.color.blue
             },
             {
               "color": "#00ff00",
               "service_color": "#00ff00",
-              "name": _custom_dashboard_trans.color.green
+              "name": _enhanced_dashboard_trans.color.green
             },
             {
               "color": "#a700ff",
               "service_color": "#a700ff",
-              "name": _custom_dashboard_trans.color.black
+              "name": _enhanced_dashboard_trans.color.black
             }
           ]
       %}

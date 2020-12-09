@@ -1,5 +1,6 @@
-template: base
+template: entity
 color: 'var(--primary-color)'
+show_state: false
 hold_action:
   action: none
 double_tap_action:

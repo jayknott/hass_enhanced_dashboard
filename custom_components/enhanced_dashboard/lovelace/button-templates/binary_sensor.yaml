@@ -13,7 +13,7 @@ styles:
     - padding: 0
     - width: 45px
     - height: 45px
-    - border-radius: 50%
+    - border-radius: null
   grid:
     - grid-template-areas: '"i"'
     - grid-template-columns: 1fr

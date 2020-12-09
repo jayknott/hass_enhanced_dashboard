@@ -1,13 +1,13 @@
 # enhanced_templates
 
-{% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
-{% set all_lights = entities | selectattr('type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
-{% set lights = entities | selectattr('type', 'equalto', 'light') | sort(attribute='name') | list %}
-{% set lights_always_on = entities | selectattr('type', 'equalto', 'light_always_on') | sort(attribute='name') | list %}
-{% set all_light_entities = entities | selectattr('type', 'in', ['light', 'light_always_on']) | sort(attribute='name') | list %}
+{% set all_entities = entities | selectattr('area_id') | list %}
+{% set all_lights = all_entities | selectattr('entity_type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
+{% set lights = all_entities | selectattr('entity_type', 'equalto', 'light') | sort(attribute='name') | list %}
+{% set lights_always_on = all_entities | selectattr('entity_type', 'equalto', 'light_always_on') | sort(attribute='name') | list %}
+{% set all_light_entities = all_entities | selectattr('entity_type', 'in', ['light', 'light_always_on']) | sort(attribute='name') | list %}
 
 panel: true
-title: {{ _custom_dashboard_trans.light.other }}
+title: {{ _enhanced_dashboard_trans.light.other }}
 icon: hass:lightbulb
 path: lights
 visible: false
@@ -30,64 +30,60 @@ cards:
       cards:
         - !include
           - ../components/page_header.yaml
-          - title: {{ _custom_dashboard_trans.light.other }}
+          - title: {{ _enhanced_dashboard_trans.light.other }}
         {% if all_light_entities and all_light_entities | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
             {% for light in lights %}
-            - card:
-                type: conditional
-                conditions:
-                  - entity: {{ light.entity_id }}
-                    state: 'on'
-                card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: light
-                      entity: {{ light.entity_id }}
-                      entity_name: {{ _custom_dashboard_trans.light.one }}
-                      entities_name: {{ _custom_dashboard_trans.light.other }}
+            - type: conditional
+              conditions:
+                - entity: {{ light.entity_id }}
+                  state: 'on'
+              card:
+                !include
+                  - ../components/entity_button.yaml
+                  - template: light
+                    entity: {{ light.entity_id }}
+                    entity_name: {{ _enhanced_dashboard_trans.light.one }}
+                    entities_name: {{ _enhanced_dashboard_trans.light.other }}
             {% endfor %}
-            - card:
-                type: conditional
-                conditions:
-                  - entity: binary_sensor.custom_dashboard_light
-                    state: 'off'
-                card:
-                  !include
-                    - ../components/caption_text.yaml
-                    - content: {{ _custom_dashboard_trans.light.all_off }}
+            - type: conditional
+              conditions:
+                - entity: binary_sensor.custom_dashboard_light
+                  state: 'off'
+              card:
+                !include
+                  - ../components/caption_text.yaml
+                  - content: {{ _enhanced_dashboard_trans.light.all_off }}
         - !include
           - ../components/section_header.yaml
-          - title: {{ _custom_dashboard_trans.light.all }}
+          - title: {{ _enhanced_dashboard_trans.light.all }}
         {% if all_lights and all_lights | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
               {% for light in all_lights %}
-              - card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: light
-                      entity: {{ light.entity_id }}
-                      entity_name: {{ _custom_dashboard_trans.light.one }}
-                      entities_name: {{ _custom_dashboard_trans.light.other }}
+              - !include
+                - ../components/entity_button.yaml
+                - template: light
+                  entity: {{ light.entity_id }}
+                  entity_name: {{ _enhanced_dashboard_trans.light.one }}
+                  entities_name: {{ _enhanced_dashboard_trans.light.other }}
               {% endfor %}
         {% endif %}
         {% if all_light_entities and all_light_entities | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
               {% for light in all_light_entities %}
-              - card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: light
-                      entity: {{ light.entity_id }}
-                      entity_name: {{ _custom_dashboard_trans.light.one }}
-                      entities_name: {{ _custom_dashboard_trans.light.other }}
+              - !include
+                - ../components/entity_button.yaml
+                - template: light
+                  entity: {{ light.entity_id }}
+                  entity_name: {{ _enhanced_dashboard_trans.light.one }}
+                  entities_name: {{ _enhanced_dashboard_trans.light.other }}
               {% endfor %}
         {% endif %}
         {% else %}
         - !include
             - ../components/caption_text.yaml
-            - content: {{ _custom_dashboard_trans.light.none }}
+            - content: {{ _enhanced_dashboard_trans.light.none }}
         {% endif %}

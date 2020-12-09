@@ -1,11 +1,11 @@
 # enhanced_templates
 
-{% set entities = _custom_dashboard_entities | selectattr('area_id') | selectattr('visible') | list %}
-{% set security = entities | selectattr('type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
-{% set security_sensors = entities | selectattr('type', 'in', ['security_motion', 'security_sensor']) | sort(attribute='sort_order,name') | list %}
+{% set all_entities = entities | selectattr('area_id') | list %}
+{% set security = all_entities | selectattr('entity_type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
+{% set security_sensors = all_entities | selectattr('entity_type', 'in', ['security_motion', 'security_sensor']) | sort(attribute='sort_order,name') | list %}
 
 panel: true
-title: {{ _custom_dashboard_trans.security.one }}
+title: {{ _enhanced_dashboard_trans.security.one }}
 icon: mdi:shield
 path: security
 visible: false
@@ -28,37 +28,35 @@ cards:
       cards:
         - !include
           - ../components/page_header.yaml
-          - title: {{ _custom_dashboard_trans.security.one }}
+          - title: {{ _enhanced_dashboard_trans.security.one }}
         {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) %}
         {% if security and security | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
               {% for device in security %}
-              - card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: security
-                      entity: {{ device.entity_id }}
+              - !include
+                - ../components/entity_button.yaml
+                - template: security
+                  entity: {{ device.entity_id }}
               {% endfor %}
         {% if security_sensors and security_sensors | length > 0 %}
         - !include
             - ../components/section_header.yaml
-            - title: {{ _custom_dashboard_trans.sensor.other }}
+            - title: {{ _enhanced_dashboard_trans.sensor.other }}
         {% endif %}
         {% endif %}
         {% if security_sensors and security_sensors | length > 0 %}
-        - type: custom:custom-dashboard-flexbox-card
+        - type: custom:simple-flexbox-card
           cards:
               {% for device in security_sensors %}
-              - card:
-                  !include
-                    - ../components/entity_button.yaml
-                    - template: security
-                      entity: {{ device.entity_id }}
+              - !include
+                - ../components/entity_button.yaml
+                - template: security
+                  entity: {{ device.entity_id }}
               {% endfor %}
         {% endif %}
         {% else %}
         - !include
             - ../components/caption_text.yaml
-            - content: {{ _custom_dashboard_trans.device.none }}
+            - content: {{ _enhanced_dashboard_trans.device.none }}
         {% endif %}

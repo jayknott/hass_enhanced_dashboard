@@ -1,11 +1,13 @@
 # enhanced_templates
 # Custom Dashboard Main Lovelace Config
 
-## Button Card Templates
-button_card_templates: !include_dir_named {{ _enhanced_dashboard_config.lovelace_dir }}/button-templates/
+# Button Card Templates
+button_card_templates: !include_dir_named button-templates/
 
-## Base Configuration
+# Base Configuration
 title: "{{ _enhanced_dashboard_trans.title }}"
-background: var(--background-image)
+
 # popup_cards: !include homekit-infused/base/templates/popup-cards/popup-cards.yaml
-views: !include {{ _enhanced_dashboard_config.lovelace_dir }}/views/main/base.yaml
+views: !include views/main/base.yaml
+
+

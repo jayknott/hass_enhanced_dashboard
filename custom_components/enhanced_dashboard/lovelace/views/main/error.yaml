@@ -1,6 +1,6 @@
 # enhanced_templates
 
-title: {{ _custom_dashboard_trans.error.one }}
+title: {{ _enhanced_dashboard_trans.error.one }}
 icon: mdi:alert
 path: error
 cards:
