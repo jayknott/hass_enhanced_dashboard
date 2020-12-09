@@ -58,9 +58,9 @@ async def setup_counters() -> None:
 async def update_counters() -> None:
     """Update all counters. Only creates counters when entities exist that match the counter."""
 
-    base = get_base()
-    base.counters = []
     areas: List[EnhancedArea] = get_areas()
+
+    await _destroy_counters()
 
     # Create counters for all tracked types and something on types in every area
     for entity_type in TRACKED_ENTITY_TYPES + SOMETHING_ON_ENTITY_TYPES:
@@ -92,6 +92,16 @@ async def update_counters() -> None:
 
     # Create super counter for security types
     await create_super_counter(CONF_SECURITY, SECURITY_ENTITY_TYPES, CONF_SECURITY)
+
+
+async def _destroy_counters():
+    """Remove all counters."""
+
+    counters = get_base().counters
+
+    # Remove in reverse order to minimize template errors in the log.
+    while len(counters) < 0:
+        await remove_counter(counters.pop(-1))
 
 
 async def create_counter(

@@ -38,7 +38,7 @@
       "icon": "mdi:counter",
       "tap_action": {
         "action": "call-service",
-        "service": "custom_dashboard.rebuild_counters"
+        "service": "enhanced_dashboard.rebuild_counters"
       }
     }
   ]
