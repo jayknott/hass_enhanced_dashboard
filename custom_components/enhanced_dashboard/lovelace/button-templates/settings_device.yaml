@@ -1,0 +1,8 @@
+template: device
+show_state: false
+tap_action:
+  action: navigate
+  navigation_path: >
+    [[[ return `settings_entities#${entity.entity_id}` ]]]
+hold_action:
+  action: more-info

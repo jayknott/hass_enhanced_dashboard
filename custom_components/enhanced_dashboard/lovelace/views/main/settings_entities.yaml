@@ -20,6 +20,10 @@ cards:
         - !include
           - ../components/page_header.yaml
           - title: '{{ title }}'
+        - !include
+          - ../components/caption_text.yaml
+          - content: '{{ _enhanced_dashboard_trans.setting.entities_intro }}'
         - type: custom:enhanced-templates-card
           registry: entity
           hide_title: true
+          hide_intro: true

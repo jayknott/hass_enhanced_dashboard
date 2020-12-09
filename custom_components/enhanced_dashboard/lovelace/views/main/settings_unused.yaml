@@ -53,7 +53,7 @@ cards:
             {% for device in all_entities | selectattr('entity_type', 'equalto', type) | list %}
             - !include
               - ../components/entity_button.yaml
-              - template: device
+              - template: settings_device
                 entity: {{ device.entity_id }}
             {% endfor %}
         {% endfor %}
