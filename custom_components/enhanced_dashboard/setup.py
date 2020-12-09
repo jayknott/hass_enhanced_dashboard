@@ -5,14 +5,11 @@ from homeassistant.const import CONF_MODE, EVENT_HOMEASSISTANT_STARTED
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.helpers.typing import ConfigType
 
+from .const import DOMAIN, HACS_INTEGRATIONS, LOVELACE_DIR, TITLE
 from .model import Configuration
+from .services import setup_services
 from .share import get_base, get_configuration, get_log
 from .template import add_template_global
-
-# from .services import setup_services
-
-
-from .const import DOMAIN, HACS_INTEGRATIONS, LOVELACE_DIR, TITLE
 
 
 async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -37,13 +34,6 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
         )
     else:
         conf.hacs_installed = True
-
-    # hass.data[DOMAIN] = {
-    #     CONF_BUILT_IN_ENTITIES: {},
-    #     CONF_MISSING_RESOURCES: [],
-    #     CONF_AREAS: [],
-    #     CONF_ENTITIES: [],
-    # }
 
     if conf.hacs_installed:
         from .hacs import setup_hacs, pending_restart
@@ -75,6 +65,7 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
     create_task(setup_files())
     create_task(setup_template())
     create_task(setup_registry())
+    create_task(setup_services())
 
     add_template_global(
         "config",
@@ -93,8 +84,6 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
 
         create_task(setup_counters())
         create_task(setup_lovelace())
-        # create_task(setup_events())
-        # create_task(setup_services())
 
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, handle_hass_started)
 
