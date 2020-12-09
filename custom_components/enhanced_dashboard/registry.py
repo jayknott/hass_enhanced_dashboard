@@ -20,4 +20,4 @@ async def setup_registry() -> None:
     et_registry.PLATFORM_MAP = PLATFORM_MAP
     et_registry.SENSOR_CLASS_MAP = SENSOR_CLASS_MAP
 
-    await et_registry.update_registry()
+    et_registry.update_registry()
