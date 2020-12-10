@@ -45,3 +45,4 @@ class IntegrationBase:
     log = logging.getLogger(f"custom_components.{DOMAIN}")
     configuration: Configuration = None
     counters: List[str] = []
+    super_counters: List[str] = []

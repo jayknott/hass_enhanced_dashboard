@@ -37,10 +37,9 @@ async def update_hacs() -> None:
         try:
             repo = hacs.get_by_name(hacs_plugin)
             if repo.data.installed:
-                log.warning(f"{hacs_plugin} already installed.")
                 continue
             else:
-                log.warning(
+                log.debug(
                     f"{hacs_plugin} installing. {repo.status.__dict__} {repo.data}"
                 )
             try:

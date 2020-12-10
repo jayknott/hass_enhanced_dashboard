@@ -97,10 +97,16 @@ async def update_counters() -> None:
 async def _destroy_counters():
     """Remove all counters."""
 
+    # Remove super counters first and in reverse order to minimize template errors in the log.
+
+    super_counters = get_base().super_counters
+
+    while len(super_counters) > 0:
+        await remove_counter(super_counters.pop(-1))
+
     counters = get_base().counters
 
-    # Remove in reverse order to minimize template errors in the log.
-    while len(counters) < 0:
+    while len(counters) > 0:
         await remove_counter(counters.pop(-1))
 
 
@@ -137,7 +143,12 @@ async def create_super_counter(
     """Create a counter based on other counters."""
 
     prefix = _prefix_from_category(category)
-    await _create_counter(name, entity_types, prefix=prefix, area=area, sum=True)
+    counter = await _create_counter(
+        name, entity_types, prefix=prefix, area=area, sum=True
+    )
+
+    if counter is not None:
+        get_base().super_counters.append(counter)
 
 
 async def remove_counter(entity_id: str) -> None:
