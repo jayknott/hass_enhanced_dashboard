@@ -1,2 +1,2 @@
-rebuild_counters:
-  description: "Rebuild the device and room counters."
+rebuild_dashboard:
+  description: "Rebuild the dashboard to reflect changes."

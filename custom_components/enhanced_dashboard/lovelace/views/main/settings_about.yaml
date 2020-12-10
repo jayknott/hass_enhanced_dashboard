@@ -1,0 +1,24 @@
+# enhanced_templates
+
+panel: false
+title: {{ _enhanced_dashboard_trans.setting.about }}
+icon: mdi:view-dashboard
+path: settings_about
+visible: false
+cards:
+  - type: custom:mod-card
+    style:
+      $: |
+        :host {
+          padding: 12px;
+        }
+    card:
+      type: vertical-stack
+      cards:
+        - !include
+          - ../components/page_header.yaml
+          - title: '{{ _enhanced_dashboard_trans.setting.about }}'
+        - type: markdown
+          content: |
+            the start
+

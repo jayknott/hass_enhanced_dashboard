@@ -115,16 +115,17 @@ sensor:
   one: Sensor
   other: Sensors
 setting:
+  about: About This Dashboard
   areas_intro: >
-    Update settings for rooms (areas). After updating, you may need to
-    rebuild the counters from the settings menu to see your changes.
+    Update settings for rooms (areas). After updating, you will need to
+    rebuild the dashboard from the settings menu to see your changes.
   entities_intro: >
-    Update settings for devices (entities). After updating, you may need to
-    rebuild the counters from the settings menu to see your changes.
+    Update settings for devices (entities). After updating, you will need to
+    rebuild the dashboard from the settings menu to see your changes.
   hidden: Hidden Devices
   one: Setting
   other: Settings
-  rebuild_counters: Rebuild Counters
+  rebuild_dashboard: Rebuild Dashboard
   unused: Unused Devices
 sort_order:
   one: Sort Order

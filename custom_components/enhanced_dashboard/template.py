@@ -21,6 +21,12 @@ async def setup_template() -> None:
     for jinja_global in JINJA_GLOBALS.items():
         add_template_global(*jinja_global)
 
+    update_translations()
+
+
+def update_translations() -> None:
+    """Update the translation template variable."""
+
     # Add translations
     add_template_global("trans", load_translations())
 

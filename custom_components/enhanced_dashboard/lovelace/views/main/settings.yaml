@@ -40,6 +40,14 @@
         "action": "call-service",
         "service": "enhanced_dashboard.rebuild_counters"
       }
+    },
+    {
+      "name": _enhanced_dashboard_trans.setting.about,
+      "icon": "mdi:view-dashboard",
+      "tap_action": {
+        "action": "navigate",
+        "navigation_path": "settings_about"
+      }
     }
   ]
 %}
