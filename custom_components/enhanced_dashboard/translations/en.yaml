@@ -2,6 +2,9 @@
 
 title: Custom Dashboard
 
+area:
+  one: Area
+  other: Areas
 automation:
   one: Automation
   other: Automation Scripts
@@ -18,7 +21,7 @@ camera:
 climate:
   one: Climate
   other: Climates
-  # HVAC modes
+  # HVAC modes, these need to be short or abbreviated
   cool: Cool
   head: Heat
   heat_cool: Auto
@@ -54,6 +57,10 @@ doorbell_ding:
 error:
   one: Error
   other: Errors
+fan:
+  one: Fan
+  other: Fans
+  speed: Speed
 group:
   one: Group
   other: Groups
@@ -115,7 +122,16 @@ sensor:
   one: Sensor
   other: Sensors
 setting:
-  about: About This Dashboard
+  about:
+    created_by: Created by
+    documentation: Documentation
+    issues: Issues
+    more_info: >
+      This dashboard is maintained and distributed by one person. Feel free
+      to fork and create your own version of this dashboard.
+    repository: Repository
+    title: About This Dashboard
+    version: Version
   areas_intro: >
     Update settings for rooms (areas). After updating, you will need to
     rebuild the dashboard from the settings menu to see your changes.

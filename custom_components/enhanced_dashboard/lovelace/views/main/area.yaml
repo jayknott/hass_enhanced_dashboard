@@ -2,7 +2,7 @@
 
 {% set area = area | from_json %}
 {% set room_name = area.name %}
-{% set room_slug = room_name | lower | replace(" ", "_") %}
+{% set room_slug = room_name | lower | replace(" ", "_") | replace("'", "") %}
 
 {% set all_entities = entities | selectattr('area_id', 'equalto', area.id) | selectattr('visible') | list %}
 {% set security = all_entities | selectattr('entity_type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
@@ -13,6 +13,7 @@
 {% set climates = all_entities | selectattr('entity_type', 'equalto', 'climate') | sort(attribute='sort_order,name') | list %}
 {% set all_lights = all_entities | selectattr('entity_type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
 {% set lights = all_entities | selectattr('entity_type', 'in', ['light', 'light_always_on']) | sort(attribute='sort_order,name') | list %}
+{% set fans = all_entities | selectattr('entity_type', 'equalto', 'fan') | sort(attribute='sort_order,name') | list %}
 {% set switches = all_entities | selectattr('entity_type', 'in', ['switch', 'switch_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remotes = all_entities | selectattr('entity_type', 'in', ['remote', 'remote_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remote_buttons = all_entities | selectattr('entity_type', 'equalto', 'remote_button') | sort(attribute='sort_order,name') | list %}
@@ -28,6 +29,7 @@
     'camera',
     'climate',
     'climate_main',
+    'fan',
     'humidity',
     'light',
     'light_always_on',
@@ -160,15 +162,17 @@ cards:
               - ../components/entity_button.yaml
               - template: security
                 entity: {{ device.entity_id }}
-                room_name: {{ room_name }}
+                room_name: >
+                  {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.lock.one }}
                 entities_name: {{ _enhanced_dashboard_trans.lock.other }}
             {% endfor %}
         {% endif %}
 
-        {% if (all_lights and (all_lights | length > 0)) or (lights and (lights | length) > 0) %}
+        {% if (all_lights and (all_lights | length > 0)) or (lights and (lights | length) > 0) or (fans and (fans | length) > 0) %}
         - type: custom:simple-flexbox-card
           cards:
+            {% if lights is none or (lights and (lights | length) > 1) %}
             {% for light in all_lights %}
             - !include
               - ../components/entity_button.yaml
@@ -176,14 +180,26 @@ cards:
                 name: {{ _enhanced_dashboard_trans.light.all }}
                 entity: {{ light.entity_id }}
             {% endfor %}
+            {% endif %}
             {% for light in lights %}
             - !include
               - ../components/entity_button.yaml
               - template: light
                 entity: {{ light.entity_id }}
-                room_name: {{ room_name }}
+                room_name: >
+                  {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.light.one }}
                 entities_name: {{ _enhanced_dashboard_trans.light.other }}
+            {% endfor %}
+            {% for fan in fans %}
+            - !include
+              - ../components/entity_button.yaml
+              - template: fan
+                entity: {{ fan.entity_id }}
+                room_name: >
+                  {{ room_name }}
+                entity_name: {{ _enhanced_dashboard_trans.fan.one }}
+                entities_name: {{ _enhanced_dashboard_trans.fan.other }}
             {% endfor %}
         {% endif %}
 
@@ -199,7 +215,8 @@ cards:
               - ../components/entity_button.yaml
               - template: remote
                 entity: {{ remote.entity_id }}
-                room_name: {{ room_name }}
+                room_name: >
+                  {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.remote.one }}
                 entities_name: {{ _enhanced_dashboard_trans.remote.other }}
             {% endfor %}
@@ -224,7 +241,8 @@ cards:
               - ../components/media_player.yaml
               - entity: {{ media_player.entity_id }}
                 hide_volume: {% if media_player.entity_type == "media_player_no_volume" %}true{% else %}false{% endif %}
-                room_name: {{ room_name }}
+                room_name: >
+                  {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.media_player.one }}
                 entities_name: {{ _enhanced_dashboard_trans.media_player.other }}
             {% endfor %}
@@ -238,7 +256,8 @@ cards:
               - ../components/entity_button.yaml
               - template: camera
                 entity: {{ camera.entity_id }}
-                room_name: {{ room_name }}
+                room_name: >
+                  {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.camera.one }}
                 entities_name: {{ _enhanced_dashboard_trans.camera.other }}
             {% endfor %}

@@ -15,7 +15,7 @@ triggers_update:
   - binary_sensor.enhanced_dashboard_area_{{area.id}}_security
 tap_action:
   action: navigate
-  navigation_path: "room_{{ area.name | lower | replace(' ', '_') }}"
+  navigation_path: "room_{{ area.name | lower | replace(' ', '_') | replace('\'', '') }}"
 hold_action:
   action: none
 double_tap_action:

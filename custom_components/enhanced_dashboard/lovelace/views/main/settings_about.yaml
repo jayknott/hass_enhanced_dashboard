@@ -1,7 +1,7 @@
 # enhanced_templates
 
 panel: false
-title: {{ _enhanced_dashboard_trans.setting.about }}
+title: {{ _enhanced_dashboard_trans.setting.about.title }}
 icon: mdi:view-dashboard
 path: settings_about
 visible: false
@@ -17,8 +17,16 @@ cards:
       cards:
         - !include
           - ../components/page_header.yaml
-          - title: '{{ _enhanced_dashboard_trans.setting.about }}'
+          - title: '{{ _enhanced_dashboard_about.title }}'
         - type: markdown
           content: |
-            the start
+            | | | | |
+            | :--- | :--- | :--- | :--- |
+            | {{ _enhanced_dashboard_trans.setting.about.version }}: | | | {{ _enhanced_dashboard_about.version }} |
+            | {{ _enhanced_dashboard_trans.setting.about.created_by }}: | | | [{{ _enhanced_dashboard_about.created_by }}](https://github.com/{{ _enhanced_dashboard_about.created_by }}) |
+            | {{ _enhanced_dashboard_trans.setting.about.documentation }}: | | | {{ _enhanced_dashboard_about.docs_link }} |
+            | {{ _enhanced_dashboard_trans.setting.about.repository }}: | | | {{ _enhanced_dashboard_about.repo_link }} |
+            | {{ _enhanced_dashboard_trans.setting.about.issues }}: | | | {{ _enhanced_dashboard_about.issues_link }} |
+
+            {{ _enhanced_dashboard_trans.setting.about.more_info }}
 

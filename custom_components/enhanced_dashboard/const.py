@@ -12,6 +12,21 @@ from homeassistant.const import (
 # Title displayed in the panel list
 TITLE = "Enhanced Dashboard"
 
+# Version for this build
+VERSION = "0.1.0"
+
+# Created by Github username. Will link to a Github profile.
+CREATE_BY = "jayknott"
+
+# Documentation link
+DOCS_LINK = "https://github.com/jayknott/enhanced_dashboard"
+
+# Repository link
+REPO_LINK = "https://github.com/jayknott/enhanced_dashboard"
+
+# Issues link
+ISSUES_LINK = "https://github.com/jayknott/enhanced_dashboard/issues"
+
 # Icon displayed in the panel list
 LOVELACE_DASHBOARD_ICON = "mdi:view-dashboard"
 
@@ -60,21 +75,30 @@ HACS_PLUGINS = [
 #   File must be in the root of the directory.
 LOVELACE_CUSTOM_CARDS = [
     # {
-    #     "dirname": "custom-dashboard-flexbox-card",
-    #     "filename": "custom-dashboard-flexbox-card.js",
+    #     "dirname": "simple-flexbox-card",
+    #     "filename": "simple-flexbox-card.js",
     # },
 ]
 
 # Default translation to use if there is no translation for the user's current HA selected language.
 DEFAULT_LANGUAGE = "en"
 
-# Supported translations
+# Supported translations, include the default language.
 SUPPORTED_LANGUAGES = ["en"]
 
 # Additional variables to include in the Jinja environment.
 # The key is the variable name and the value will be the value of the variabile.
 # _{DOMAIN}_ will automatically be added to the variable names.
-JINJA_GLOBALS = {}
+JINJA_GLOBALS = {
+    "about": {
+        "title": TITLE,
+        "version": VERSION,
+        "created_by": CREATE_BY,
+        "docs_link": DOCS_LINK,
+        "repo_link": REPO_LINK,
+        "issues_link": ISSUES_LINK
+    }
+}
 
 # Supported entity types (These can be anything the dashboard will support and track)
 # Does not need to be specific to HA integrations.
@@ -87,6 +111,8 @@ ENTITY_TYPES = [
     "camera",
     "climate",
     "climate_main",
+    "fan",
+    "fan_always_on",
     "humidity",
     "light",
     "light_always_on",
@@ -150,6 +176,7 @@ TRACKED_ENTITY_TYPE_ON_STATES = {
 # or in an area. This is useful if the dashboard tracks lights
 # and all other entities seperately.
 SOMETHING_ON_ENTITY_TYPES = [
+    "fan",
     "media_player",
     "media_player_no_volume",
     "remote",
@@ -250,9 +277,6 @@ LOVELACE_RESOURCE_TYPE_JS = "js"
 LOVELACE_RESOURCE_TYPE_MODULE = "module"
 
 SERVICE_REBUILD_DASHBOARD = "rebuild_dashboard"
-SERVICE_IDS = {
-    SERVICE_REBUILD_DASHBOARD: f"{DOMAIN}.{SERVICE_REBUILD_DASHBOARD}",
-}
 
 TRANSLATIONS_PATH = "translations/"
 

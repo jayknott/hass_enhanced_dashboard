@@ -34,15 +34,15 @@
       }
     },
     {
-      "name": _enhanced_dashboard_trans.setting.rebuild_counters,
-      "icon": "mdi:counter",
+      "name": _enhanced_dashboard_trans.setting.rebuild_dashboard,
+      "icon": "mdi:tools",
       "tap_action": {
         "action": "call-service",
-        "service": "enhanced_dashboard.rebuild_counters"
+        "service": "enhanced_dashboard.rebuild_dashboard"
       }
     },
     {
-      "name": _enhanced_dashboard_trans.setting.about,
+      "name": _enhanced_dashboard_trans.setting.about.title,
       "icon": "mdi:view-dashboard",
       "tap_action": {
         "action": "navigate",

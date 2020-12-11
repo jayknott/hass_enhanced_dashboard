@@ -5,6 +5,8 @@ tap_action:
   action: >
     [[[
       switch(entity.entity_id.split('.')[0]) {
+        case 'fan':
+        case 'light':
         case 'switch':
           return 'toggle';
         case 'media_player':

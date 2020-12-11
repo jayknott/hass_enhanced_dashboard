@@ -4,6 +4,7 @@
 {%
   set devices = all_entities |
                 selectattr('entity_type', 'in', [
+                  'fan',
                   'media_player', 'media_player_no_volume',
                   'remote', 'switch'
                 ]) |
@@ -13,6 +14,7 @@
 {%
   set all_devices = all_entities |
                 selectattr('entity_type', 'in', [
+                  'fan', 'fan_always_on',
                   'media_player', 'media_player_no_volume',
                   'remote', 'remote_always_on',
                   'switch', 'switch_always_on'

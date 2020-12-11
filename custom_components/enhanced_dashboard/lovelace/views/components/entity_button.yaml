@@ -8,31 +8,40 @@
   {% if room_name is defined %}
     {%
       set display_name = display_name |
-        regex_replace(find=room_name + ' | ' + room_name , replace='', ignorecase=True)
+        regex_replace(find=room_name | trim ~ ' | ' ~ room_name | trim, ignorecase=true)
+    %}
+    {%
+      set room_name_without_noun = room_name | trim |
+        regex_replace(find=_enhanced_dashboard_trans.room.one ~ ' | ' ~ _enhanced_dashboard_trans.room.one, ignorecase=true) |
+        regex_replace(find=_enhanced_dashboard_trans.area.one ~ ' | ' ~ _enhanced_dashboard_trans.area.one, ignorecase=true)
+    %}
+    {%
+      set display_name = display_name |
+        regex_replace(find=room_name_without_noun ~ ' | ' ~ room_name_without_noun, ignorecase=true)
     %}
   {% endif %}
   {% if entities_name is defined %}
     {%
       set display_name = display_name |
-        regex_replace(find=entities_name + ' | ' + entities_name , replace='', ignorecase=True)
+        regex_replace(find=entities_name | trim ~ ' | ' ~ entities_name | trim, ignorecase=true)
     %}
   {% endif %}
   {% if entity_name is defined %}
     {%
       set display_name = display_name |
-        regex_replace(find=entity_name + ' | ' + entity_name , replace='', ignorecase=True)
+        regex_replace(find=entity_name | trim ~ ' | ' ~ entity_name | trim, ignorecase=true)
     %}
   {% endif %}
   {% if entities_name_2 is defined %}
     {%
       set display_name = display_name |
-        regex_replace(find=entities_name_2 + ' | ' + entities_name_2 , replace='', ignorecase=True)
+        regex_replace(find=entities_name_2 | trim ~ ' | ' ~ entities_name_2 | trim, ignorecase=true)
     %}
   {% endif %}
   {% if entity_name_2 is defined %}
     {%
       set display_name = display_name |
-        regex_replace(find=entity_name_2 + ' | ' + entity_name_2 , replace='', ignorecase=True)
+        regex_replace(find=entity_name_2 | trim ~ ' | ' ~ entity_name_2 | trim, ignorecase=true)
     %}
   {% endif %}
 {% endif %}
@@ -58,7 +67,7 @@ color: >
   {{ color }}
 {% endif %}
 
-{% if template == 'light' %}
+{% if template in ['light', 'fan'] %}
 tap_action:
   action: toggle
 double_tap_action:
@@ -115,7 +124,6 @@ hold_action:
     card:
       type: custom:light-popup-card
       entity: {{ entity }}
-      displayType: auto
       fullscreen: false
       actionsInARow: 4
       settings: true
@@ -128,6 +136,8 @@ hold_action:
           child_card: true
           consolidate_entities: true
           hide_header: true
+    {% if template == 'light' %}
+      displayType: auto
     {% if "{:b}".format(state_attr(entity, "supported_features") | default(0, true))[-5] == "1" %}
       actions:
       {%
@@ -188,6 +198,35 @@ hold_action:
           color: "{{ display_color }}"
           name: "{{ color_name }}"
       {% endfor %}
+    {% endif %}
+    {% endif %}
+    {% if template == 'fan' %}
+      displayType: switch
+      icon: mdi:fan
+    {% if state_attr(entity, "speed_list") is not none and state_attr(entity, "speed_list") is sequence %}
+      actions:
+      {% for speed in state_attr(entity, "speed_list") %}
+        {% if speed not in ['off', '0'] %}
+        - service: fan.set_speed
+          service_data:
+            entity_id: {{ entity }}
+            speed: '{{ speed }}'
+          icon: >-
+            {% if speed in ['1', 'low'] %}
+              {{- 'mdi:fan-speed-1' }}
+            {% elif speed in ['2', 'medium'] %}
+              {{- 'mdi:fan-speed-2' }}
+            {% elif speed in ['3', 'high'] %}
+              {{- 'mdi:fan-speed-3' }}
+            {% else %}
+              {{- 'mdi:fan' }}
+            {% endif %}
+          color: '#FFFFFF'
+          name: >
+            {{- speed if speed not in ['1', '2', '3', 'low', 'medium', 'high'] else '' }}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
     {% endif %}
     deviceID:
       - this

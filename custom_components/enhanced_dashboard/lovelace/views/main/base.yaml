@@ -16,6 +16,7 @@
 - !include batteries.yaml
 
 - !include settings.yaml
+- !include settings_about.yaml
 - !include settings_areas.yaml
 - !include settings_entities.yaml
 - !include settings_hidden.yaml
