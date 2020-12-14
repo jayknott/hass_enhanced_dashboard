@@ -306,8 +306,14 @@ async def _create_counter(
 
     platform: EntityPlatform = get_base().hass.data[CONF_ENTITY_PLATFORM][PLATFORM][0]
 
-    area_string = f"area_{area.id}_" if area is not None else ""
-    area_title = f"Area {area.id[-5:-1]} " if area is not None else ""
+    area_string = ""
+    area_title = ""
+
+    if area is not None:
+        area_string = f"area_{area.id}_"
+        area_title = (
+            f"Area {area.id}" if len(area.id) < 30 else f"Area {area.id[-5:-1]}"
+        )
 
     device_id = f"{DOMAIN}_{area_string}{name}"
     entity_id = f"{PLATFORM}.{device_id}"
