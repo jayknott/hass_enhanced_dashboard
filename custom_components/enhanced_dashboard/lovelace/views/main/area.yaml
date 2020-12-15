@@ -287,6 +287,8 @@ cards:
               - ../components/entity_button.yaml
               - template: device
                 entity: {{ automation.entity_id }}
+                icon: >
+                  {{ 'mdi:robot' if automation.domain == 'automation' else none }}
                 room_name: >
                   {{ room_name }}
             {% endfor %}
