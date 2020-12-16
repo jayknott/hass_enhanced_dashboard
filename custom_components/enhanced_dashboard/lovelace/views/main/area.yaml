@@ -13,7 +13,7 @@
 {% set climates = all_entities | selectattr('entity_type', 'equalto', 'climate') | sort(attribute='sort_order,name') | list %}
 {% set all_lights = all_entities | selectattr('entity_type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
 {% set lights = all_entities | selectattr('entity_type', 'in', ['light', 'light_always_on']) | sort(attribute='sort_order,name') | list %}
-{% set fans = all_entities | selectattr('entity_type', 'equalto', 'fan') | sort(attribute='sort_order,name') | list %}
+{% set fans = all_entities | selectattr('entity_type', 'in', ['fan', 'fan_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set switches = all_entities | selectattr('entity_type', 'in', ['switch', 'switch_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remotes = all_entities | selectattr('entity_type', 'in', ['remote', 'remote_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remote_buttons = all_entities | selectattr('entity_type', 'equalto', 'remote_button') | sort(attribute='sort_order,name') | list %}
@@ -30,6 +30,7 @@
     'climate',
     'climate_main',
     'fan',
+    'fan_always_on',
     'humidity',
     'light',
     'light_always_on',
