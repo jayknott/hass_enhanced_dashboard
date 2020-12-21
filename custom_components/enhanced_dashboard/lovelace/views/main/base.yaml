@@ -19,6 +19,7 @@
 - !include settings_about.yaml
 - !include settings_areas.yaml
 - !include settings_entities.yaml
+- !include settings_people.yaml
 - !include settings_hidden.yaml
 - !include settings_unused.yaml
 
