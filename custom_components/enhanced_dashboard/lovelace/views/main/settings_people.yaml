@@ -1,0 +1,29 @@
+# enhanced_templates
+
+{% set title = _enhanced_dashboard_trans.setting.other ~ " - " ~ _enhanced_dashboard_trans.person.other %}
+
+panel: false
+title: {{ title }}
+icon: mdi:account
+path: settings_people
+visible: false
+cards:
+  - type: custom:mod-card
+    style:
+      $: |
+        :host {
+          padding: 12px;
+        }
+    card:
+      type: vertical-stack
+      cards:
+        - !include
+          - ../components/page_header.yaml
+          - title: '{{ title }}'
+        - !include
+          - ../components/caption_text.yaml
+          - content: '{{ _enhanced_dashboard_trans.setting.people_intro }}'
+        - type: custom:enhanced-templates-card
+          registry: person
+          hide_title: true
+          hide_intro: true

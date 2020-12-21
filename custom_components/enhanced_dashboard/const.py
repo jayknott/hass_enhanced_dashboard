@@ -96,7 +96,7 @@ JINJA_GLOBALS = {
         "created_by": CREATE_BY,
         "docs_link": DOCS_LINK,
         "repo_link": REPO_LINK,
-        "issues_link": ISSUES_LINK
+        "issues_link": ISSUES_LINK,
     }
 }
 
@@ -277,6 +277,9 @@ LOVELACE_RESOURCE_TYPE_JS = "js"
 LOVELACE_RESOURCE_TYPE_MODULE = "module"
 
 SERVICE_REBUILD_DASHBOARD = "rebuild_dashboard"
+SERVICE_SECURE = "secure"
+SERVICE_TURN_OFF_DEVICES = "turn_off_devices"
+SERVICE_TURN_OFF_LIGHTS = "turn_off_lights"
 
 TRANSLATIONS_PATH = "translations/"
 

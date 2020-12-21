@@ -1,2 +1,8 @@
 rebuild_dashboard:
   description: "Rebuild the dashboard to reflect changes."
+secure:
+  description: "Secure all security devices."
+turn_off_devices:
+  description: "Turn off all devices that are not always on."
+turn_off_lights:
+  description: "Turn off all lights that are not always on."

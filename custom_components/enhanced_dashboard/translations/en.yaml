@@ -141,6 +141,9 @@ setting:
   hidden: Hidden Devices
   one: Setting
   other: Settings
+  people_intro: >
+    Update settings for people (users). After updating, you will need to
+    rebuild the dashboard from the settings menu to see your changes.
   rebuild_dashboard: Rebuild Dashboard
   unused: Unused Devices
 sort_order:

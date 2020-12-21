@@ -18,6 +18,14 @@
       }
     },
     {
+      "name": _enhanced_dashboard_trans.person.other,
+      "icon": "mdi:account",
+      "tap_action": {
+        "action": "navigate",
+        "navigation_path": "settings_people"
+      }
+    },
+    {
       "name": _enhanced_dashboard_trans.setting.hidden,
       "icon": "mdi:eye-off",
       "tap_action": {
