@@ -125,7 +125,7 @@ cards:
           - title: "{{ _enhanced_dashboard_trans.person.other }}"
         - type: custom:simple-flexbox-card
           cards:
-            {% for person in states.person %}
+            {% for person in persons | sort(attribute='sort_order,name') | list %}
             - type: custom:button-card
               template: person
               entity: {{ person.entity_id }}
