@@ -14,7 +14,6 @@ from homeassistant.components.lovelace.const import (
     CONF_MODE,
     CONF_REQUIRE_ADMIN,
     CONF_RESOURCE_TYPE_WS,
-    CONF_RESOURCES,
     CONF_SHOW_IN_SIDEBAR,
     CONF_TITLE,
     DOMAIN as LOVELACE_DOMAIN,
@@ -28,6 +27,7 @@ from homeassistant.const import (
 from homeassistant.helpers.collection import StorageCollection
 
 from .const import (
+    CONF_RESOURCES,
     HACS_PLUGINS,
     LOVELACE_CUSTOM_CARDS,
     LOVELACE_DASHBOARD_ICON,
