@@ -49,12 +49,19 @@ custom_fields:
           state = 'Unknown'
       }
 
+      let temp = '';
+      if (entity.attributes.target_temp_high != null && entity.attributes.target_temp_low != null) {
+        temp = `${entity.attributes.target_temp_low}-${entity.attributes.target_temp_high}°`;
+      } else if (entity.attributes.temperature != null) {
+        temp = `${entity.attributes.temperature}°`;
+      }
+
       let label = `
         <ha-icon
           icon="mdi:thermostat"
           style="width: 14px; height: 14px; color: var(--secondary-text-color); margin: 0"
         ></ha-icon>
-        <span>${state} ${entity.attributes.temperature}°</span>
+        <span>${state}${temp}</span>
       `;
 
       return label;
