@@ -51,9 +51,9 @@ custom_fields:
 
       let temp = '';
       if (entity.attributes.target_temp_high != null && entity.attributes.target_temp_low != null) {
-        temp = `${entity.attributes.target_temp_low}-${entity.attributes.target_temp_high}°`;
+        temp = ` ${entity.attributes.target_temp_low}-${entity.attributes.target_temp_high}°`;
       } else if (entity.attributes.temperature != null) {
-        temp = `${entity.attributes.temperature}°`;
+        temp = ` ${entity.attributes.temperature}°`;
       }
 
       let label = `
