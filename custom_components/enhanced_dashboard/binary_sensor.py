@@ -1,17 +1,25 @@
 """Binary sensors helper."""
+from homeassistant.components.template.const import (
+    CONF_AVAILABILITY,
+    CONF_OBJECT_ID,
+    CONF_PICTURE,
+)
 from homeassistant.components.template.binary_sensor import (
     BinarySensorTemplate,
-    CONF_ATTRIBUTE_TEMPLATES,
-    _async_create_entities,
+    CONF_DELAY_OFF,
+    CONF_DELAY_ON,
 )
 from homeassistant.const import (
-    CONF_FRIENDLY_NAME,
-    CONF_SENSORS,
-    CONF_VALUE_TEMPLATE,
+    CONF_DEVICE_CLASS,
+    CONF_ICON,
+    CONF_NAME,
+    CONF_STATE,
+    CONF_UNIQUE_ID,
 )
+from homeassistant.helpers.entity_platform import EntityPlatform
 
-from .const import PLATFORM_BINARY_SENSOR
-from .share import get_hass
+from .const import CONF_ATTRIBUTES, CONF_ENTITY_PLATFORM, PLATFORM_BINARY_SENSOR
+from .share import get_hass, get_log
 
 PLATFORM = PLATFORM_BINARY_SENSOR
 
@@ -20,17 +28,34 @@ async def create_binary_sensor_entity(
     device_id: str, conf: dict = {}
 ) -> BinarySensorTemplate:
     config = {
-        CONF_SENSORS: {
-            device_id: {
-                CONF_FRIENDLY_NAME: device_id,
-                CONF_VALUE_TEMPLATE: None,
-                CONF_ATTRIBUTE_TEMPLATES: {},
-            }
-        }
+        CONF_OBJECT_ID: device_id,
+        CONF_NAME: device_id,
+        CONF_STATE: None,
+        CONF_ATTRIBUTES: {},
     }
-    config[CONF_SENSORS][device_id].update(conf)
+    config.update(conf)
 
-    entity: BinarySensorTemplate = (await _async_create_entities(get_hass(), config))[0]
+    platform: EntityPlatform = get_hass().data[CONF_ENTITY_PLATFORM][
+        PLATFORM_BINARY_SENSOR
+    ][0]
+
+    entity: BinarySensorTemplate = BinarySensorTemplate(
+        get_hass(),
+        device_id,
+        config.get(CONF_NAME),
+        config.get(CONF_DEVICE_CLASS),
+        config.get(CONF_STATE),
+        config.get(CONF_ICON),
+        config.get(CONF_PICTURE),
+        config.get(CONF_AVAILABILITY),
+        config.get(CONF_DELAY_ON),
+        config.get(CONF_DELAY_OFF),
+        config.get(CONF_ATTRIBUTES, {}),
+        config.get(CONF_UNIQUE_ID),
+    )
+
+    await platform.async_add_entities([entity])
+
     entity.entity_id = f"{PLATFORM}.{device_id}"
 
     return entity

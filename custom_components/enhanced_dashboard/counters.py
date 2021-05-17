@@ -4,9 +4,9 @@ from typing import List, Optional, TypedDict, Union
 
 from homeassistant.components.template.binary_sensor import CONF_ATTRIBUTE_TEMPLATES
 from homeassistant.const import (
-    CONF_FRIENDLY_NAME,
-    CONF_ICON_TEMPLATE,
-    CONF_VALUE_TEMPLATE,
+    CONF_NAME,
+    CONF_ICON,
+    CONF_STATE,
     STATE_OFF,
     STATE_ON,
 )
@@ -22,6 +22,7 @@ from custom_components.enhanced_templates.registry import (
 from .binary_sensor import create_binary_sensor_entity
 
 from .const import (
+    CONF_ATTRIBUTES,
     CONF_COUNT,
     CONF_ENTITIES,
     CONF_ENTITY_PLATFORM,
@@ -37,7 +38,7 @@ from .const import (
     TRACKED_ENTITY_TYPE_ON_STATES,
     TRACKED_ENTITY_TYPES,
 )
-from .share import get_base
+from .share import get_base, get_hass
 
 PLATFORM = PLATFORM_BINARY_SENSOR
 
@@ -154,7 +155,7 @@ async def create_super_counter(
 async def remove_counter(entity_id: str) -> None:
     """Remove a counter from HA if it exists."""
 
-    hass = get_base().hass
+    hass = get_hass()
 
     platform: EntityPlatform = hass.data[CONF_ENTITY_PLATFORM][PLATFORM][0]
     sensor = hass.states.get(entity_id)
@@ -304,8 +305,6 @@ async def _create_counter(
 ) -> Optional[str]:
     """Create a counter or super counter if sum is true."""
 
-    platform: EntityPlatform = get_base().hass.data[CONF_ENTITY_PLATFORM][PLATFORM][0]
-
     area_string = ""
     area_title = ""
 
@@ -330,24 +329,20 @@ async def _create_counter(
     if templates is None:
         return None
 
-    await platform.async_add_entities(
-        [
-            await create_binary_sensor_entity(
-                device_id,
-                {
-                    CONF_FRIENDLY_NAME: friendly_name,
-                    CONF_ICON_TEMPLATE: Template("mdi:counter"),
-                    CONF_VALUE_TEMPLATE: Template(templates["state_template"]),
-                    CONF_ATTRIBUTE_TEMPLATES: {
-                        CONF_COUNT: Template(templates["count_template"]),
-                        CONF_ENTITIES: Template(templates["entity_template"]),
-                        CONF_TRACKED_ENTITY_COUNT: Template(
-                            templates["tracked_count_template"]
-                        ),
-                    },
-                },
-            )
-        ]
+    await create_binary_sensor_entity(
+        device_id,
+        {
+            CONF_NAME: Template(friendly_name),
+            CONF_ICON: Template("mdi:counter"),
+            CONF_STATE: Template(templates["state_template"]),
+            CONF_ATTRIBUTES: {
+                CONF_COUNT: Template(templates["count_template"]),
+                CONF_ENTITIES: Template(templates["entity_template"]),
+                CONF_TRACKED_ENTITY_COUNT: Template(
+                    templates["tracked_count_template"]
+                ),
+            },
+        },
     )
 
     return entity_id
