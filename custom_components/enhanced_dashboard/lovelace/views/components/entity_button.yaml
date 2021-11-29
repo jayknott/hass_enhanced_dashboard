@@ -210,7 +210,7 @@ hold_action:
         - service: fan.set_percentage
           service_data:
             entity_id: {{ entity }}
-            speed: >-
+            percentage: >-
               {% if speed in ['1', 'low'] %}
                 {{- 33 }}
               {% elif speed in ['2', 'medium'] %}
