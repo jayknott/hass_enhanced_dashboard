@@ -20,5 +20,4 @@ tap_action:
   service_data: >
     [[[ return {entity_id: entity.entity_id} ]]]
 hold_action:
-  action: >
-    [[[ return ['switch', 'media_player', 'media_player_no_volume'].includes(entity.entity_id.split('.')[0]) ? 'more-info' : 'none' ]]]
+  action: more-info
