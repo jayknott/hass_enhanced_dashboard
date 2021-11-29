@@ -74,9 +74,9 @@ custom_fields:
         <ha-icon
           icon="mdi:run"
           icon=${
-            media_state == null
+            motion_state == null
               ? 'mdi:walk'
-              : media_state && media_state.state == 'on'
+              : motion_state && motion_state.state == 'on'
                 ? 'mdi:run'
                 : 'mdi:walk'
           }
