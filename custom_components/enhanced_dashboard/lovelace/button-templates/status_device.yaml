@@ -1,0 +1,6 @@
+template: status_sensor
+icon: mdi:stop-circle
+state:
+  - value: 'on'
+    icon: mdi:play-circle
+

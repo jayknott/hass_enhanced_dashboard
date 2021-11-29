@@ -93,7 +93,7 @@ styles:
     - color: >
         [[[
           let colors = {
-            alert: 'var(--error-state-color)',
+            alert: 'var(--error-color)',
             cloud: 'var(--weather-icon-cloud-back-color, #d4d4d4)',
             moon: 'var(--weather-icon-moon-color, #fcf497)',
             rain: 'var(--weather-icon-rain-color, #30b3ff)',

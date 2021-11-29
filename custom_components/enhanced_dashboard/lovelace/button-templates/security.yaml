@@ -13,7 +13,7 @@ styles:
         [[[
           return ['locked', 'closed', 'off'].includes(entity.state)
             ? 'var(--ha-card-background, var(--card-background-color, white))'
-            : 'var(--error-state-color)'
+            : 'var(--error-color)'
         ]]]
     - color: >
         [[[

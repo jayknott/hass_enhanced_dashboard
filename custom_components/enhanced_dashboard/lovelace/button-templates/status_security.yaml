@@ -11,7 +11,7 @@ extra_styles: |
   }
 state:
   - value: 'on'
-    color: var(--error-state-color)
+    color: var(--error-color)
     icon: mdi:shield-alert
     styles:
       icon:

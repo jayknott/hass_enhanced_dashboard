@@ -1,0 +1,6 @@
+template: status_sensor
+icon: mdi:lightbulb-outline
+state:
+  - value: 'on'
+    icon: mdi:lightbulb
+

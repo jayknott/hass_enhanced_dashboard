@@ -50,14 +50,12 @@ cards:
             - !include
               - ../components/entity_button.yaml
               - entity: binary_sensor.enhanced_dashboard_light
-                template: status_sensor
-                icon: hass:lightbulb
+                template: status_light
                 navigation_path: lights
             - !include
               - ../components/entity_button.yaml
               - entity: binary_sensor.enhanced_dashboard_something_on
-                template: status_sensor
-                icon: mdi:play-circle
+                template: status_device
                 navigation_path: something_on
             - !include
               - ../components/entity_button.yaml
