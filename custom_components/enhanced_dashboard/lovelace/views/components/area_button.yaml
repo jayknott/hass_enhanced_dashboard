@@ -51,7 +51,7 @@ custom_fields:
         <ha-icon
           icon=${
             media_state == null
-              ? 'mdi:stop-circle'
+              ? 'mdi:stop-circle-outline'
               : media_state && media_state.state == 'on'
                 ? 'mdi:play-circle'
                 : 'mdi:stop-circle'
@@ -97,7 +97,7 @@ custom_fields:
         <ha-icon
           icon=${
             security_state == null
-              ? 'mdi:shield'
+              ? 'mdi:shield-outline'
               : security_state && security_state.state == 'on'
                 ? 'mdi:shield-alert'
                 : 'mdi:shield-check'
