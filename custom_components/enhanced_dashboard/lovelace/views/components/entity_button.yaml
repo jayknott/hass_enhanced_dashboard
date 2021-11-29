@@ -73,9 +73,9 @@ tap_action:
 double_tap_action:
   action: none
 hold_action:
-  action: call-service
-  service: browser_mod.popup
-  service_data:
+  action: fire-dom-event
+  browser_mod:
+    command: popup
     title: {{ friendly_name }}
     style:
       .: |
@@ -228,7 +228,5 @@ hold_action:
       {% endfor %}
     {% endif %}
     {% endif %}
-    deviceID:
-      - this
   haptic: heavy
 {% endif %}
