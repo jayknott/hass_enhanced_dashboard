@@ -207,10 +207,19 @@ hold_action:
       actions:
       {% for speed in state_attr(entity, "speed_list") %}
         {% if speed not in ['off', '0'] %}
-        - service: fan.set_speed
+        - service: fan.set_percentage
           service_data:
             entity_id: {{ entity }}
-            speed: '{{ speed }}'
+            speed: >-
+              {% if speed in ['1', 'low'] %}
+                {{- 33 }}
+              {% elif speed in ['2', 'medium'] %}
+                {{- 66 }}
+              {% elif speed in ['3', 'high'] %}
+                {{- 100 }}
+              {% else %}
+                {{- speed }}
+              {% endif %}
           icon: >-
             {% if speed in ['1', 'low'] %}
               {{- 'mdi:fan-speed-1' }}
