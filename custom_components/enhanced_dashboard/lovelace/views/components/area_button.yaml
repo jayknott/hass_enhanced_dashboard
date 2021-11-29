@@ -72,7 +72,6 @@ custom_fields:
       let motion_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_motion'];
       return `
         <ha-icon
-          icon="mdi:run"
           icon=${
             motion_state == null
               ? 'mdi:walk'
