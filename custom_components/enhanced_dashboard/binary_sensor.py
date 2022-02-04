@@ -42,15 +42,7 @@ async def create_binary_sensor_entity(
     entity: BinarySensorTemplate = BinarySensorTemplate(
         get_hass(),
         device_id,
-        config.get(CONF_NAME),
-        config.get(CONF_DEVICE_CLASS),
-        config.get(CONF_STATE),
-        config.get(CONF_ICON),
-        config.get(CONF_PICTURE),
-        config.get(CONF_AVAILABILITY),
-        config.get(CONF_DELAY_ON),
-        config.get(CONF_DELAY_OFF),
-        config.get(CONF_ATTRIBUTES, {}),
+        config,
         config.get(CONF_UNIQUE_ID),
     )
 
