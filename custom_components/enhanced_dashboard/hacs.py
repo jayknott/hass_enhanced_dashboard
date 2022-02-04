@@ -1,8 +1,5 @@
 """Extend Lovelace to support this integration."""
-from custom_components.hacs.helpers.functions.register_repository import (
-    register_repository,
-)
-from custom_components.hacs.share import get_hacs
+from custom_components.hacs.base import async_register_repository, HacsBase
 
 from .const import (
     HACS_CUSTOM_REPOSITORIES,
@@ -25,12 +22,12 @@ async def update_hacs() -> None:
         return
 
     log = get_log()
-    hacs = get_hacs()
+    hacs = HacsBase()
 
     # Add custom repositories to HACS is not already present.
     for repo in HACS_CUSTOM_REPOSITORIES:
         if hacs.get_by_name(repo["full_name"]) is None:
-            await register_repository(repo["full_name"], repo["type"])
+            await async_register_repository(repo["full_name"], repo["type"])
 
     # Install needed HACS integrations and plugins
     for hacs_plugin in list(HACS_INTEGRATIONS.values()) + HACS_PLUGINS:
@@ -62,7 +59,7 @@ def pending_restart():
 
     for hacs_plugin in list(HACS_INTEGRATIONS.values()) + HACS_PLUGINS:
         try:
-            repo = get_hacs().get_by_name(hacs_plugin)
+            repo = HacsBase().get_by_name(hacs_plugin)
             if repo.pending_restart:
                 return True
 
