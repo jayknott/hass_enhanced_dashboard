@@ -92,14 +92,14 @@ async def update_resources() -> None:
     if not conf.hacs_installed:
         return
 
-    from custom_components.hacs.share import get_hacs
+    from custom_components.hacs.base import HacsBase
 
-    hacs = get_hacs()
+    hacs = HacsBase()
 
     # Add the HACS plugins to the list
     for hacs_plugin in HACS_PLUGINS:
         try:
-            repo = hacs.get_by_name(hacs_plugin)
+            repo = hacs.repositories.get_by_name(hacs_plugin)
             url = f"/hacsfiles/{hacs_plugin.split('/')[-1]}/{repo.data.file_name}"
 
             try:
