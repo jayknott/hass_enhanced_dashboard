@@ -41,7 +41,6 @@ async def create_binary_sensor_entity(
 
     entity: BinarySensorTemplate = BinarySensorTemplate(
         get_hass(),
-        device_id,
         config,
         config.get(CONF_UNIQUE_ID),
     )
