@@ -19,7 +19,9 @@ async def setup_registry() -> None:
     et_registry.COVER_CLASS_MAP = COVER_CLASS_MAP
     et_registry.ENTITY_TYPES = (
         ENTITY_TYPES
-        + map(lambda entity_type: f"security_{entity_type}", SECURITY_ENTITY_TYPES)
+        + list(
+            map(lambda entity_type: f"security_{entity_type}", SECURITY_ENTITY_TYPES)
+        )
     ).sort()
     et_registry.PLATFORM_MAP = PLATFORM_MAP
     et_registry.SENSOR_CLASS_MAP = SENSOR_CLASS_MAP
