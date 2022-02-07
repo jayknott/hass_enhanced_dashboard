@@ -285,7 +285,8 @@ cards:
             {% for device in other_devices %}
             - !include
               - ../components/entity_button.yaml
-              - template: {% if device.entity_type == 'battery' %}battery{% else %}device{% endif %}
+              - template: >
+                  {% if device.entity_type == 'battery' %}battery{% elif device.entity_type == 'input_button' %}button{% else %}device{% endif %}
                 entity: {{ device.entity_id }}
                 room_name: >
                   {{ room_name }}
