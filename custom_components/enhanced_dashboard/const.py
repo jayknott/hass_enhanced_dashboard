@@ -6,7 +6,9 @@ from homeassistant.const import (
     STATE_PLAYING,
 )
 
+STATE_CLEAN = "clean"
 STATE_RUNNING = "running"
+STATE_DRY = "dry"
 
 #################################################
 # Constants that need to be changed per project
@@ -174,7 +176,7 @@ TRACKED_ENTITY_TYPES = [
 # use ON and OFF by default. This applied to TRACKED_ENTITY_TYPES and
 # SOMETHING_ON_ENTITY_TYPES
 TRACKED_ENTITY_TYPE_ON_STATES = {
-    "appliance": [STATE_RUNNING, STATE_ON],
+    "appliance": [STATE_RUNNING, STATE_CLEAN, STATE_DRY],
     "media_player": [STATE_PLAYING],
     "battery": ["<10"],
 }

@@ -60,14 +60,14 @@ cards:
         {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) %}
         - !include
             - ../components/section_header.yaml
-            - title: {{ _enhanced_dashboard_trans.sensor.other }}
+            - title: {{ _enhanced_dashboard_trans.battery.other }}
         {% endif %}
         - type: custom:simple-flexbox-card
           cards:
-              {% for device in security_sensors %}
+              {% for device in security_batteries %}
               - !include
                 - ../components/entity_button.yaml
-                - template: security
+                - template: battery
                   entity: {{ device.entity_id }}
               {% endfor %}
         {% endif %}

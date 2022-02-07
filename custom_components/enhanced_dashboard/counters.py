@@ -316,7 +316,7 @@ async def _create_counter(
 
     device_id = f"{DOMAIN}_{area_string}{name}"
     entity_id = f"{PLATFORM}.{device_id}"
-    friendly_name = f"{TITLE} {area_title}{name.replace('_', ' ').title()}"
+    friendly_name = f"{TITLE} {area_title} {name.replace('_', ' ').title()}"
 
     await remove_counter(entity_id)
 
