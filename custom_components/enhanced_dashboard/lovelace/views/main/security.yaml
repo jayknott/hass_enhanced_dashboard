@@ -3,6 +3,7 @@
 {% set all_entities = entities | selectattr('area_id') | list %}
 {% set security = all_entities | selectattr('entity_type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
 {% set security_sensors = all_entities | selectattr('entity_type', 'in', ['security_motion', 'security_sensor']) | sort(attribute='sort_order,name') | list %}
+{% set security_batteries = all_entities | selectattr('entity_type', 'in', ['security_battery']) | sort(attribute='sort_order,name') | list %}
 
 panel: true
 title: {{ _enhanced_dashboard_trans.security.one }}
@@ -29,7 +30,7 @@ cards:
         - !include
           - ../components/page_header.yaml
           - title: {{ _enhanced_dashboard_trans.security.one }}
-        {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) %}
+        {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) or (security_batteries and security_batteries | length > 0) %}
         {% if security and security | length > 0 %}
         - type: custom:simple-flexbox-card
           cards:
@@ -39,13 +40,28 @@ cards:
                 - template: security
                   entity: {{ device.entity_id }}
               {% endfor %}
+        {% endif %}
         {% if security_sensors and security_sensors | length > 0 %}
+        {% if (security and security | length > 0) %}
         - !include
             - ../components/section_header.yaml
             - title: {{ _enhanced_dashboard_trans.sensor.other }}
         {% endif %}
+        - type: custom:simple-flexbox-card
+          cards:
+              {% for device in security_sensors %}
+              - !include
+                - ../components/entity_button.yaml
+                - template: security
+                  entity: {{ device.entity_id }}
+              {% endfor %}
         {% endif %}
-        {% if security_sensors and security_sensors | length > 0 %}
+        {% if security_batteries and security_sensors | length > 0 %}
+        {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) %}
+        - !include
+            - ../components/section_header.yaml
+            - title: {{ _enhanced_dashboard_trans.sensor.other }}
+        {% endif %}
         - type: custom:simple-flexbox-card
           cards:
               {% for device in security_sensors %}

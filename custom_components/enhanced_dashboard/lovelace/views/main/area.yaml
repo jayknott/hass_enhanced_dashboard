@@ -5,7 +5,7 @@
 {% set room_slug = room_name | lower | replace(" ", "_") | replace("'", "") %}
 
 {% set all_entities = entities | selectattr('area_id', 'equalto', area.id) | selectattr('visible') | list %}
-{% set security = all_entities | selectattr('entity_type', 'in', ['security_lock', 'security_opening']) | sort(attribute='sort_order,name') | list %}
+{% set security = all_entities | selectattr('entity_type', 'in', ['security_lock', 'security_opening', 'security_battery']) | sort(attribute='sort_order,name') | list %}
 {% set security_sensors = all_entities | selectattr('entity_type', 'in', ['security_motion', 'security_sensor']) | sort(attribute='sort_order,name') | list %}
 {% set motion_sensors = all_entities | selectattr('entity_type', 'in', ['motion', 'occupancy']) | sort(attribute='sort_order,name') | list %}
 {% set temperatures = all_entities | selectattr('entity_type', 'equalto', 'temperature') | sort(attribute='sort_order,name') | list %}
@@ -14,6 +14,7 @@
 {% set all_lights = all_entities | selectattr('entity_type', 'equalto', 'all_lights') | sort(attribute='sort_order,name') | list %}
 {% set lights = all_entities | selectattr('entity_type', 'in', ['light', 'light_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set fans = all_entities | selectattr('entity_type', 'in', ['fan', 'fan_always_on']) | sort(attribute='sort_order,name') | list %}
+{% set appliances = all_entities | selectattr('entity_type', equalto, 'appliance') | sort(attribute='sort_order,name') | list %}
 {% set switches = all_entities | selectattr('entity_type', 'in', ['switch', 'switch_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remotes = all_entities | selectattr('entity_type', 'in', ['remote', 'remote_always_on']) | sort(attribute='sort_order,name') | list %}
 {% set remote_buttons = all_entities | selectattr('entity_type', 'equalto', 'remote_button') | sort(attribute='sort_order,name') | list %}
@@ -25,6 +26,7 @@
 {%
   set handled_types = [
     'all_lights',
+    'appliance',
     'automation',
     'camera',
     'climate',
@@ -42,6 +44,7 @@
     'remote_always_on',
     'remote_button',
     'script',
+    'security_battery',
     'security_lock',
     'security_motion',
     'security_opening',
@@ -201,6 +204,19 @@ cards:
                   {{ room_name }}
                 entity_name: {{ _enhanced_dashboard_trans.fan.one }}
                 entities_name: {{ _enhanced_dashboard_trans.fan.other }}
+            {% endfor %}
+        {% endif %}
+
+        {% if appliances and (appliances | length) > 0 %}
+        - type: custom:simple-flexbox-card
+          cards:
+            {% for device in appliances %}
+            - !include
+              - ../components/entity_button.yaml
+              - template: appliance
+                entity: {{ device.entity_id }}
+                room_name: >
+                  {{ room_name }}
             {% endfor %}
         {% endif %}
 

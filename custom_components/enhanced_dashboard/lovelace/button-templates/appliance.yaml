@@ -1,0 +1,8 @@
+template: device
+state:
+  - value: 'on|running|clean|dry'
+    operator: regex
+    color: var(--paper-item-icon-active-color)
+  - value: 'error|uneven'
+    operator: regex
+    color: var(--error-color)

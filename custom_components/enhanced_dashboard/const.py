@@ -2,8 +2,11 @@ from homeassistant.const import (
     CONF_DEFAULT,
     STATE_CLOSED,
     STATE_LOCKED,
+    STATE_ON,
     STATE_PLAYING,
 )
+
+STATE_RUNNING = "running"
 
 #################################################
 # Constants that need to be changed per project
@@ -106,6 +109,7 @@ JINJA_GLOBALS = {
 ENTITY_TYPES = [
     "",
     "all_lights",
+    "appliance",
     "automation",
     "battery",
     "camera",
@@ -139,6 +143,7 @@ ENTITY_TYPES = [
 # Groups will be created with a 'security' prefix for each area and
 # entity type/area combination for tracking.
 SECURITY_ENTITY_TYPES = [
+    "battery",
     "lock",
     "motion",
     "opening",
@@ -149,6 +154,7 @@ SECURITY_ENTITY_TYPES = [
 # for a security entity that is in an unsecured state. Do not included entity
 # types that use ON and OFF by default.
 SECURITY_ENTITY_TYPE_OFF_STATES = {
+    "battery": [">=10"],
     "lock": [STATE_LOCKED],
     "opening": [STATE_CLOSED],
 }
@@ -168,6 +174,7 @@ TRACKED_ENTITY_TYPES = [
 # use ON and OFF by default. This applied to TRACKED_ENTITY_TYPES and
 # SOMETHING_ON_ENTITY_TYPES
 TRACKED_ENTITY_TYPE_ON_STATES = {
+    "appliance": [STATE_RUNNING, STATE_ON],
     "media_player": [STATE_PLAYING],
     "battery": ["<10"],
 }
@@ -176,6 +183,7 @@ TRACKED_ENTITY_TYPE_ON_STATES = {
 # or in an area. This is useful if the dashboard tracks lights
 # and all other entities seperately.
 SOMETHING_ON_ENTITY_TYPES = [
+    "appliance",
     "fan",
     "media_player",
     "media_player_no_volume",
@@ -204,6 +212,7 @@ SENSOR_CLASS_MAP = {
     CONF_DEFAULT: "sensor",
 }
 
+# The device classes for covers that will be automatically mapped to an entity type
 COVER_CLASS_MAP = {
     "door": "security_opening",
     "garage": "security_opening",
