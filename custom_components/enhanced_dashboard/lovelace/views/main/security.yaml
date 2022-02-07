@@ -30,8 +30,8 @@ cards:
         - !include
           - ../components/page_header.yaml
           - title: {{ _enhanced_dashboard_trans.security.one }}
-        {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) or (security_batteries and security_batteries | length > 0) %}
-        {% if security and security | length > 0 %}
+        {% if (security and (security | length > 0)) or (security_sensors and (security_sensors | length > 0)) or (security_batteries and (security_batteries | length > 0)) %}
+        {% if security and (security | length > 0) %}
         - type: custom:simple-flexbox-card
           cards:
               {% for device in security %}
@@ -41,8 +41,8 @@ cards:
                   entity: {{ device.entity_id }}
               {% endfor %}
         {% endif %}
-        {% if security_sensors and security_sensors | length > 0 %}
-        {% if (security and security | length > 0) %}
+        {% if security_sensors and (security_sensors | length) > 0 %}
+        {% if security and (security | length > 0) %}
         - !include
             - ../components/section_header.yaml
             - title: {{ _enhanced_dashboard_trans.sensor.other }}
@@ -56,8 +56,8 @@ cards:
                   entity: {{ device.entity_id }}
               {% endfor %}
         {% endif %}
-        {% if security_batteries and security_sensors | length > 0 %}
-        {% if (security and security | length > 0) or (security_sensors and security_sensors | length > 0) %}
+        {% if security_batteries and (security_batteries | length > 0) %}
+        {% if (security and (security | length > 0)) or (security_sensors and (security_sensors | length > 0)) %}
         - !include
             - ../components/section_header.yaml
             - title: {{ _enhanced_dashboard_trans.battery.other }}
