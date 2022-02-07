@@ -2,6 +2,10 @@ template: base
 show_state: false
 show_label: false
 color: var(--paper-item-icon-color)
+tap_actin: call-service
+service: input_button.press
+service_date: >
+  [[[ return {entity_id: entity.entity_id} ]]]
 styles:
   grid:
     - grid-template-areas: '"i i" "n n" "s l"'
