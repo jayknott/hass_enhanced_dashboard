@@ -44,22 +44,22 @@ cards:
           cards:
             - !include
               - ../components/entity_button.yaml
-              - entity: binary_sensor.enhanced_dashboard_security
+              - entity: binary_sensor.enhanced_dashboard_type_security
                 template: status_security
                 navigation_path: security
             - !include
               - ../components/entity_button.yaml
-              - entity: binary_sensor.enhanced_dashboard_light
+              - entity: binary_sensor.enhanced_dashboard_type_light
                 template: status_light
                 navigation_path: lights
             - !include
               - ../components/entity_button.yaml
-              - entity: binary_sensor.enhanced_dashboard_something_on
+              - entity: binary_sensor.enhanced_dashboard_type_something_on
                 template: status_device
                 navigation_path: something_on
             - !include
               - ../components/entity_button.yaml
-              - entity: binary_sensor.enhanced_dashboard_battery
+              - entity: binary_sensor.enhanced_dashboard_type_battery
                 template: status_battery
                 navigation_path: batteries
             {% if climate_main is not none %}

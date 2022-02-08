@@ -9,10 +9,10 @@ name: {{ area.name }}
 icon: {{ area.icon }}
 color: 'var(--primary-color)'
 triggers_update:
-  - binary_sensor.enhanced_dashboard_area_{{area.id}}_light
-  - binary_sensor.enhanced_dashboard_area_{{area.id}}_something_on
-  - binary_sensor.enhanced_dashboard_area_{{area.id}}_motion
-  - binary_sensor.enhanced_dashboard_area_{{area.id}}_security
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_type_light
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_type_something_on
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_type_motion
+  - binary_sensor.enhanced_dashboard_area_{{area.id}}_type_security
 tap_action:
   action: navigate
   navigation_path: "room_{{ area.name | lower | replace(' ', '_') | replace('\'', '') }}"
@@ -23,7 +23,7 @@ double_tap_action:
 custom_fields:
   lights: >
     [[[
-      let light_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_light'];
+      let light_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_type_light'];
       return `
         <ha-icon
           icon=${
@@ -46,7 +46,7 @@ custom_fields:
     ]]]
   media: >
     [[[
-      let media_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_something_on'];
+      let media_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_type_something_on'];
       return `
         <ha-icon
           icon=${
@@ -69,7 +69,7 @@ custom_fields:
     ]]]
   motion: >
     [[[
-      let motion_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_motion'];
+      let motion_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_type_motion'];
       return `
         <ha-icon
           icon=${
@@ -92,7 +92,7 @@ custom_fields:
     ]]]
   unsecured: >
     [[[
-      let security_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_security'];
+      let security_state = states['binary_sensor.enhanced_dashboard_area_{{area.id}}_type_security'];
       return `
         <ha-icon
           icon=${
