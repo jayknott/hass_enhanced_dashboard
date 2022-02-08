@@ -29,8 +29,6 @@ icon: >
   ]]]
 tap_action:
   action: more-info
-hold_action:
-  action: none
 show_state: true
 label: >
   [[[ 
