@@ -5,7 +5,8 @@ color: var(--paper-item-icon-color)
 tap_action:
   action: call-service
   service: input_button.press
-  service_data: entity
+  service_data: >
+    [[[ return { entity_id: entity.entity_id } ]]]
 styles:
   grid:
     - grid-template-areas: '"i i" "n n" "s l"'
