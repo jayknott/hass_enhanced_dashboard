@@ -156,7 +156,7 @@ SECURITY_ENTITY_TYPES = [
 # for a security entity that is in an unsecured state. Do not included entity
 # types that use ON and OFF by default.
 SECURITY_ENTITY_TYPE_OFF_STATES = {
-    "battery": [">9"],
+    "battery": ["<10"],
     "lock": [STATE_LOCKED],
     "opening": [STATE_CLOSED],
 }
