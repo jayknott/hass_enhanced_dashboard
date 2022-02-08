@@ -18,6 +18,6 @@ tap_action:
   service: >
     [[[ return ['media_player'].includes(entity.entity_id.split('.')[0]) ? 'media_player.media_play_pause' : null ]]]
   service_data: >
-    [[[ return {entity_id: entity.entity_id} ]]]
+    [[[ return { "entity_id": entity.entity_id } ]]]
 hold_action:
   action: more-info
