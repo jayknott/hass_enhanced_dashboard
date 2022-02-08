@@ -31,7 +31,7 @@ from .const import (
     CONF_TRACKED_ENTITY_COUNT,
     DOMAIN,
     PLATFORM_BINARY_SENSOR,
-    SECURITY_ENTITY_TYPE_OFF_STATES,
+    SECURITY_ENTITY_TYPE_ON_STATES,
     SECURITY_ENTITY_TYPES,
     SOMETHING_ON_ENTITY_TYPES,
     TITLE,
@@ -71,7 +71,7 @@ async def update_counters() -> None:
 
     # Create a security counter in each security type in every area
     for entity_type in SECURITY_ENTITY_TYPES:
-        states = SECURITY_ENTITY_TYPE_OFF_STATES.get(entity_type, [STATE_OFF])
+        states = SECURITY_ENTITY_TYPE_ON_STATES.get(entity_type, [STATE_OFF])
         for area in areas:
             await create_counter(entity_type, states, CONF_SECURITY, area, True)
 
@@ -211,6 +211,10 @@ def _counter_templates(
     state_template = []
     count_template = []
     entity_template = []
+
+    if reject and len(standard_states) > 0:
+        standard_states.append(STATE_ON)
+
     for id in entity_ids:
         if len(standard_states) > 0:
             state_template.append(
