@@ -154,9 +154,11 @@ SECURITY_ENTITY_TYPES = [
 
 # Map OFF states (array) for security entity types. This will allow easier tracking
 # for a security entity that is in an unsecured state. Do not included entity
-# types that use ON and OFF by default.
+# types that use ON and OFF by default. Only one comparison condition is permitted
+# per entity type, or one list of standard states. Comparison conditions and standard
+# states cannot be mixed for security entity types.
 SECURITY_ENTITY_TYPE_OFF_STATES = {
-    "battery": ["<10"],
+    "battery": [">=10"],
     "lock": [STATE_LOCKED],
     "opening": [STATE_CLOSED],
 }

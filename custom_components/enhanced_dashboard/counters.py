@@ -71,7 +71,7 @@ async def update_counters() -> None:
 
     # Create a security counter in each security type in every area
     for entity_type in SECURITY_ENTITY_TYPES:
-        states = [STATE_OFF] + SECURITY_ENTITY_TYPE_OFF_STATES.get(entity_type, [])
+        states = SECURITY_ENTITY_TYPE_OFF_STATES.get(entity_type, [STATE_OFF])
         for area in areas:
             await create_counter(entity_type, states, CONF_SECURITY, area, True)
 
@@ -211,16 +211,17 @@ def _counter_templates(
     state_template = []
     count_template = []
     entity_template = []
+    reject_states = ["undefined", "unavailable", None] if reject else []
     for id in entity_ids:
         if len(standard_states) > 0:
             state_template.append(
-                f"states('{id}') {'not ' if reject else ''}in {standard_states}"
+                f"states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)}"
             )
             count_template.append(
-                f"(1 if states('{id}') {'not ' if reject else ''}in {standard_states} else 0)"
+                f"(1 if states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)} else 0)"
             )
             entity_template.append(
-                f"('{id}' if states('{id}') {'not ' if reject else ''}in {standard_states} else '')"
+                f"('{id}' if states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)} else '')"
             )
 
         for compare_state in compare_states:
