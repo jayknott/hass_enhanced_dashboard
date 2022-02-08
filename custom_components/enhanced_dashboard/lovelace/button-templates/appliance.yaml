@@ -1,4 +1,8 @@
 template: device
+show_state: true
+show_label: true
+label: >
+  [[[ return entity.attributes.last_running_time || '' ]]]
 state:
   - value: 'on|running|clean|dry'
     operator: regex
