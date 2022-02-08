@@ -211,17 +211,16 @@ def _counter_templates(
     state_template = []
     count_template = []
     entity_template = []
-    reject_states = ["undefined", "unavailable", None] if reject else []
     for id in entity_ids:
         if len(standard_states) > 0:
             state_template.append(
-                f"states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)}"
+                f"states('{id}') {'not ' if reject else ''}in {standard_states}"
             )
             count_template.append(
-                f"(1 if states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)} else 0)"
+                f"(1 if states('{id}') {'not ' if reject else ''}in {standard_states} else 0)"
             )
             entity_template.append(
-                f"('{id}' if states('{id}') {'not ' if reject else ''}in {standard_states.append(reject_states)} else '')"
+                f"('{id}' if states('{id}') {'not ' if reject else ''}in {standard_states} else '')"
             )
 
         for compare_state in compare_states:
