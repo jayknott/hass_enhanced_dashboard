@@ -259,8 +259,8 @@ def _super_counter_templates(
 ) -> Optional[CounterTemplates]:
     """Create the templates for the super counter entity."""
 
-    area_regex = f"area_{area.id}_" if area is not None else "area_(?:(?!_type_).)*"
-    regex = f"binary_sensor\\.{DOMAIN}_{area_regex}{prefix}({'|'.join(entity_types)})"
+    area_regex = f"area_{area.id}_" if area is not None else "_area_(?:(?!_type_).)*"
+    regex = f"binary_sensor\\.{DOMAIN}{area_regex}_type_{prefix}(?:{'|'.join(entity_types)})"
 
     entity_ids = _super_counter_entities(regex)
 
