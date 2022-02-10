@@ -6,8 +6,6 @@ from homeassistant.helpers.template import (
     TemplateEnvironment,
 )
 
-from custom_components.enhanced_templates.yaml_parser import parse_yaml
-
 from .const import DEFAULT_LANGUAGE, DOMAIN, JINJA_GLOBALS, TRANSLATIONS_PATH
 from .share import get_configuration, get_hass, get_log
 
@@ -41,6 +39,8 @@ def add_template_global(name: str, value: Any) -> None:
 
 def load_translations() -> TranslationDict:
     """Load translation YAML files."""
+
+    from custom_components.enhanced_templates.yaml_parser import parse_yaml
 
     # Always load the default language
     translations: TranslationDict = parse_yaml(

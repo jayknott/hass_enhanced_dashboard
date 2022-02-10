@@ -23,9 +23,9 @@ climate:
   other: Climates
   # HVAC modes, these need to be short or abbreviated
   cool: Cool
-  head: Heat
+  heat: Heat
   heat_cool: Auto
-  off: 'Off'
+  'off': 'Off'
 color:
   one: Color
   other: Colors

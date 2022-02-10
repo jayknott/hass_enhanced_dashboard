@@ -1,11 +1,11 @@
 """Adds config flow for this integration."""
-from custom_components.enhanced_dashboard.share import get_configuration, get_log
+from custom_components.enhanced_dashboard.share import get_configuration
 from typing import Any, Dict, Optional
 import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import callback
 from homeassistant.helpers.typing import ConfigType
 
 from .const import DEFAULT_LANGUAGE, DOMAIN, SUPPORTED_LANGUAGES, TITLE

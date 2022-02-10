@@ -2,7 +2,6 @@
 import re
 from typing import List, Optional, TypedDict, Union
 
-from homeassistant.components.template.binary_sensor import CONF_ATTRIBUTE_TEMPLATES
 from homeassistant.const import (
     CONF_NAME,
     CONF_ICON,
@@ -12,12 +11,6 @@ from homeassistant.const import (
 )
 from homeassistant.helpers.entity_platform import EntityPlatform
 from homeassistant.helpers.template import Template
-
-from custom_components.enhanced_templates.registry import (
-    EnhancedArea,
-    get_areas,
-    get_entities,
-)
 
 from .binary_sensor import create_binary_sensor_entity
 
@@ -58,6 +51,8 @@ async def setup_counters() -> None:
 
 async def update_counters() -> None:
     """Update all counters. Only creates counters when entities exist that match the counter."""
+
+    from custom_components.enhanced_templates.registry import EnhancedArea, get_areas
 
     areas: List[EnhancedArea] = get_areas()
 
@@ -115,7 +110,8 @@ async def create_counter(
     entity_type: str,
     states: List[str],
     category: Optional[str] = None,
-    area: Optional[EnhancedArea] = None,
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    area: Optional[any] = None,
     reject: bool = False,
 ) -> None:
     """Create a counter for a single entity type."""
@@ -139,7 +135,8 @@ async def create_super_counter(
     name: str,
     entity_types: List[str],
     category: Optional[str] = None,
-    area: Optional[EnhancedArea] = None,
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    area: Optional[any] = None,
 ) -> None:
     """Create a counter based on other counters."""
 
@@ -166,9 +163,13 @@ async def remove_counter(entity_id: str) -> None:
 
 
 def _counter_entities(
-    entity_type: str, area: Optional[EnhancedArea] = None
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    entity_type: str,
+    area: Optional[any] = None,
 ) -> List[str]:
     """Enumerate the entities the counter will check for updates on."""
+
+    from custom_components.enhanced_templates.registry import get_entities
 
     entities = get_entities()
     return [
@@ -189,7 +190,8 @@ def _counter_entities(
 def _counter_templates(
     entity_type: str,
     states: List[str],
-    area: Optional[EnhancedArea] = None,
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    area: Optional[any] = None,
     reject: bool = False,
 ) -> Optional[CounterTemplates]:
     """Create the templates for the counter entity"""
@@ -258,7 +260,8 @@ def _super_counter_entities(regex: str) -> List[str]:
 
 def _super_counter_templates(
     entity_types: List[str],
-    area: Optional[EnhancedArea] = None,
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    area: Optional[any] = None,
     prefix: Optional[str] = None,
 ) -> Optional[CounterTemplates]:
     """Create the templates for the super counter entity."""
@@ -303,7 +306,8 @@ async def _create_counter(
     entity_types: Union[str, List[str]],
     states: Optional[List[str]] = None,
     prefix: Optional[str] = None,
-    area: Optional[EnhancedArea] = None,
+    # This is supposed to be EnhancedArea, but it is not always loaded
+    area: Optional[any] = None,
     reject: bool = False,
     sum: bool = False,
 ) -> Optional[str]:

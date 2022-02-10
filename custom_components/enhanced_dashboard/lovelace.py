@@ -73,7 +73,7 @@ async def add_resource_module(url: str) -> None:
 
 
 async def update_resources() -> None:
-    """Check Lovelace resources and and resources that are missing if in storage mode."""
+    """Check Lovelace resources and add resources that are missing if in storage mode."""
 
     # base = get_base()
     conf = get_configuration()
@@ -94,12 +94,12 @@ async def update_resources() -> None:
 
     from custom_components.hacs.base import HacsBase
 
-    hacs = HacsBase()
+    hacs: HacsBase = get_hass().data["hacs"]
 
     # Add the HACS plugins to the list
     for hacs_plugin in HACS_PLUGINS:
         try:
-            repo = hacs.repositories.get_by_name(hacs_plugin)
+            repo = hacs.repositories.get_by_full_name(hacs_plugin)
             url = f"/hacsfiles/{hacs_plugin.split('/')[-1]}/{repo.data.file_name}"
 
             try:

@@ -6,7 +6,7 @@ from .const import (
     HACS_INTEGRATIONS,
     HACS_PLUGINS,
 )
-from .share import get_configuration, get_log
+from .share import get_configuration, get_hass, get_log
 
 
 async def setup_hacs() -> None:
@@ -22,7 +22,8 @@ async def update_hacs() -> None:
         return
 
     log = get_log()
-    hacs = HacsBase()
+    hass = get_hass()
+    hacs = hass.data["hacs"]
 
     # Add custom repositories to HACS is not already present.
     for repo in HACS_CUSTOM_REPOSITORIES:
@@ -32,7 +33,7 @@ async def update_hacs() -> None:
     # Install needed HACS integrations and plugins
     for hacs_plugin in list(HACS_INTEGRATIONS.values()) + HACS_PLUGINS:
         try:
-            repo = hacs.repositories.get_by_name(hacs_plugin)
+            repo = hacs.repositories.get_by_full_name(hacs_plugin)
             if repo.data.installed:
                 continue
             else:

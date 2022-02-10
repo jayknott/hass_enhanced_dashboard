@@ -9,7 +9,6 @@ from .const import DOMAIN, HACS_INTEGRATIONS, LOVELACE_DIR, TITLE
 from .model import Configuration
 from .services import setup_services
 from .share import get_base, get_configuration, get_log
-from .template import add_template_global
 
 
 async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -59,7 +58,7 @@ async def setup_integration(hass: HomeAssistant, config: ConfigType) -> bool:
 
     from .files import setup_files
     from .registry import setup_registry
-    from .template import setup_template
+    from .template import add_template_global, setup_template
 
     create_task = hass.async_create_task
     create_task(setup_files())

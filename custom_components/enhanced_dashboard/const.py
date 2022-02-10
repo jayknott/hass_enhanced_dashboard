@@ -2,7 +2,6 @@ from homeassistant.const import (
     CONF_DEFAULT,
     STATE_CLOSED,
     STATE_LOCKED,
-    STATE_ON,
     STATE_PLAYING,
 )
 
@@ -42,11 +41,11 @@ DEFAULT_AREA_ICON = "mdi:square-rounded-outline"
 HACS_CUSTOM_REPOSITORIES = [
     {"full_name": "jayknott/hass_enhanced_templates", "type": "integration"},
     {
-        "full_name": "jayknott/hass_enhanced_templates_card",
+        "full_name": "jayknott/lovelace-enhanced-templates-card",
         "type": "plugin",
     },
     {
-        "full_name": "jayknott/hass_lovelace_simple_flexbox_card",
+        "full_name": "jayknott/lovelace-simple-flexbox-card",
         "type": "plugin",
     },
     {"full_name": "DBuit/light-popup-card", "type": "plugin"},
@@ -71,8 +70,8 @@ HACS_PLUGINS = [
     "thomasloven/lovelace-card-mod",
     "kalkih/mini-media-player",
     "thomasloven/lovelace-state-switch",
-    "jayknott/hass_enhanced_templates_card",
-    "jayknott/hass_lovelace_simple_flexbox_card",
+    "jayknott/lovelace-enhanced-templates-card",
+    "jayknott/lovelace-simple-flexbox-card",
 ]
 
 # Custom cards that needs to be imported. These needs to be stored in ./lovelace/cards/[dirname].
